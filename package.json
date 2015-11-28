@@ -1,0 +1,26 @@
+{
+  "name": "vcontrol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elegant-view/vcontrol.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/elegant-view/vcontrol/issues"
+  },
+  "homepage": "https://github.com/elegant-view/vcontrol#readme",
+  "devDependencies": {
+    "css-loader": "^0.23.0",
+    "html-loader": "^0.4.0",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.2",
+    "style-loader": "^0.13.0"
+  }
+}
