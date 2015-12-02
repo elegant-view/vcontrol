@@ -1,0 +1,12 @@
+<div event-outclick="${onOutClick(event)}">
+    <ui-button class-list="skin-primary"
+        on-click="${toggleLayer}">
+        ${title}
+        <span class="triangle-down"></span>
+    </ui-button>
+    <ui-layer ref="layer" on-out-click="${outClick}">
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+    </ui-layer>
+</div>

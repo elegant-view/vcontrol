@@ -1,16 +1,11 @@
-var Button = require('../src/Button/Button');
+var CommandMenu = require('../src/CommandMenu/CommandMenu');
 var vcomponent = require('vcomponent');
 
 var Main = vcomponent.Component.extends(
     {
-        tpl: require('./Button.tpl.html'),
-        componentClasses: [Button],
+        tpl: require('./CommandMenu.tpl.html'),
+        componentClasses: [CommandMenu],
         literalAttrReady: function () {
-            this.setData({
-                click: function () {
-                    alert('click');
-                }
-            });
         }
     },
     {

@@ -1,14 +1,19 @@
+/**
+ * @file 按钮控件
+ * @author yibuyisheng(yibuyisheng@163.com, https://github.com/yibuyisheng)
+ */
+
 var Control = require('../Control');
 
 module.exports = Control.extends(
     {
-        tpl: require('./button.tpl.html')
+        tpl: require('./Button.tpl.html')
     },
     {
         $name: 'Button',
 
         getStyle: function () {
-            return require('./button.less')[0][1];
+            return require('./Button.less')[0][1];
         }
     }
 );
