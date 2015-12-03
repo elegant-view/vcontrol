@@ -8,21 +8,24 @@ var Control = require('../Control');
 module.exports = Control.extends(
     {
         tpl: require('./Layer.tpl.html'),
+
         show: function () {
-            var classList = this.getData('classList', []);
+            var classList = this.getData('class', []);
             classList.push('show');
-            this.setData('classList', classList);
+            this.setData('class', classList);
         },
+
         hide: function () {
             this.setData(
-                'classList',
-                this.getData('classList', []).filter(function (klass) {
+                'class',
+                this.getData('class', []).filter(function (klass) {
                     return klass !== 'show';
                 })
             );
         },
+
         isShow: function () {
-            var classList = this.getData('classList', []);
+            var classList = this.getData('class', []);
             for (var i = 0, il = classList.length; i < il; ++i) {
                 if (classList[i] === 'show') {
                     return true;

@@ -12,7 +12,7 @@ module.exports = Control.extends(
         tpl: require('./CommandMenu.tpl.html'),
         componentClasses: [Button, Layer],
 
-        literalAttrReady: function () {
+        componentDidMount: function () {
             var me = this;
             var layer = me.ref('layer');
             this.setData({
@@ -27,9 +27,12 @@ module.exports = Control.extends(
                 onOutClick: function (event) {
                     layer.hide();
                 },
-                onLayerClick: function (event) {
-                    me.setData('title', event.target.innerText);
+                onItemClick: function () {
                     layer.hide();
+                    var onItemSelected = me.getData('onItemSelected');
+                    if (onItemSelected instanceof Function) {
+                        onItemSelected.apply(null, arguments);
+                    }
                 }
             });
         }

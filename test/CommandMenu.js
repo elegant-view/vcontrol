@@ -5,7 +5,14 @@ var Main = vcomponent.Component.extends(
     {
         tpl: require('./CommandMenu.tpl.html'),
         componentClasses: [CommandMenu],
-        literalAttrReady: function () {
+        componentDidMount: function () {
+            var me = this;
+            this.setData({
+                title: '请选择',
+                onItemSelected: function (event, item) {
+                    me.setData({title: item.label});
+                }
+            });
         }
     },
     {
