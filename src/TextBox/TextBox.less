@@ -1,0 +1,18 @@
+.text-box {
+    height: 35px;
+    box-sizing: border-box;
+    padding: 7px;
+    border: 1px solid #dddddd;
+
+    &:focus {
+        outline: none;
+        border-color: #70ccc0;
+    }
+
+    textarea& {
+        resize: none;
+        height: 80px;
+        width: 200px;
+        vertical-align: middle;
+    }
+}
