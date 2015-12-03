@@ -5,11 +5,12 @@ var Main = vcomponent.Component.extends(
     {
         tpl: require('./Button.tpl.html'),
         componentClasses: [Button],
-        literalAttrReady: function () {
+        componentDidMount: function () {
             this.setData({
                 click: function () {
                     alert('click');
-                }
+                },
+                skinLink: 'skin-link'
             });
         }
     },
