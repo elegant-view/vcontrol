@@ -26,6 +26,10 @@ module.exports = Control.extends(
                 },
                 onOutClick: function (event) {
                     layer.hide();
+                },
+                onLayerClick: function (event) {
+                    me.setData('title', event.target.innerText);
+                    layer.hide();
                 }
             });
         }
