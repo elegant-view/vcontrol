@@ -5,7 +5,8 @@ module.exports = {
         main: "./src/main.js",
         Button: "./test/Button.js",
         CommandMenu: "./test/CommandMenu.js",
-        TextBox: "./test/TextBox.js"
+        TextBox: "./test/TextBox.js",
+        Table: "./test/Table.js"
     },
     output: {
         path: path.join(__dirname, 'dist'),
