@@ -20,13 +20,15 @@ import u from 'underscore';
 export default class Button extends Component {
     ready() {
         this.state.set('onClick', this.onClick.bind(this));
+    }
 
-        let btnType = this.props.get('type');
+    beforeRender(props, state) {
+        let btnType = props.get('type');
         if (u.isString(btnType)) {
             btnType = [btnType];
         }
         if (u.isArray(btnType)) {
-            this.setState({class: u.map(btnType, t => `btn-${t}`)});
+            return {class: u.map(btnType, t => `btn-${t}`)};
         }
     }
 

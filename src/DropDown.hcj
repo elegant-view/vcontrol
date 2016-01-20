@@ -7,15 +7,11 @@
 <template>
     <div class="btn-group ${state.isOpen ? 'open' : ''} ${props.class.join(' ')}"
         on-outclick="state.onOutClick()">
-        <button type="button"
-            class="btn ${props.type ? ('btn-' + props.type) : ''} dropdown-toggle"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            on-click="state.onClick()">
-            ${state.text}
-            <span class="caret"></span>
-        </button>
+        <ui-button class="dropdown-toggle"
+            type="${props.type}"
+            on-click="${state.onClick}">
+            ${state.text}<span class="caret"></span>
+        </ui-button>
         <ul class="dropdown-menu">
             <!-- for: ${props.items} as ${item} -->
                 <!-- if: ${item.isSeparator} -->
@@ -35,6 +31,7 @@
 <script>
 import {Component} from 'vcomponent';
 import u from 'underscore';
+import Button from './Button';
 
 export default class DropDown extends Component {
     ready() {
@@ -48,6 +45,10 @@ export default class DropDown extends Component {
 
     setText(text) {
         this.setState({text});
+    }
+
+    getComponentClasses() {
+        return [Button];
     }
 
     onItemClick(item) {
