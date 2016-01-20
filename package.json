@@ -18,10 +18,13 @@
   },
   "devDependencies": {
     "edp-webserver": "github:ecomfe/edp-webserver",
+    "node-sass": "^3.4.2",
     "vhcj": "github:elegant-view/vhcj"
   },
   "dependencies": {
+    "bootstrap-sass": "^3.3.6",
     "esl": "github:ecomfe/esl",
+    "underscore": "^1.8.3",
     "vcomponent": "github:elegant-view/vcomponent"
   }
 }

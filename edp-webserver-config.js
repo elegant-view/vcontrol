@@ -1,3 +1,6 @@
+var path = require('path');
+var sass = require('node-sass');
+
 exports.port = 8848;
 exports.directoryIndexes = true;
 exports.documentRoot = __dirname;
@@ -18,6 +21,23 @@ exports.getLocations = function () {
             handler: home('test/main.html')
         },
         {
+            location: /\.scss$/,
+            handler: function (context) {
+                var docRoot  = context.conf.documentRoot;
+                var pathname = context.request.pathname;
+                var file = docRoot + pathname;
+
+                context.header['content-type'] = 'text/css; charset=utf-8';
+                try {
+                    context.content = sass.renderSync({file: file}).css.toString();
+                }
+                catch (error) {
+                    console.error(error.stack);
+                    context.status = 500;
+                }
+            }
+        },
+        {
             location: /\.js$/,
             handler: function (context) {
                 var docRoot  = context.conf.documentRoot;
@@ -33,9 +53,14 @@ exports.getLocations = function () {
                 if (fs.existsSync(file)) {
                     var compiler = require('vhcj');
                     context.stop();
-                    compiler(fs.readFileSync(file).toString()).then(function (code) {
+                    compiler(fs.readFileSync(file).toString(), path.dirname(file)).then(function (code) {
                         context.header['content-type'] = 'text/javascript; charset=utf-8';
                         context.content = code;
+                        context.start();
+                    }).catch(function (error) {
+                        console.error(error.stack);
+                        context.content = 'Server Error';
+                        context.status = 500;
                         context.start();
                     });
                 }

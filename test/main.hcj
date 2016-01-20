@@ -1,18 +1,94 @@
 <style>
+.main {
+    margin: 10px;
+}
 </style>
 <template>
-<ui-button>按钮</ui-button>
+<div class="${props.class}">
+    <ui-button on-click="${state.onButtonClick}">no type</ui-button>
+    <ui-button type="default">default</ui-button>
+    <ui-button type="primary">primary</ui-button>
+    <ui-button type="success">success</ui-button>
+    <ui-button type="info">info</ui-button>
+    <ui-button type="warning">warning</ui-button>
+    <ui-button type="danger">danger</ui-button>
+    <ui-button type="link">link</ui-button>
+</div>
+<div class="${props.class}">
+    <ui-drop-down items="${state.items}"
+        on-item-selected="${state.onItemSelected}"
+        text="default text"
+        type="default"
+        ref="dropdown">
+    </ui-drop-down>
+    <ui-drop-down items="${state.items}"
+        type="primary"
+        text="default text">
+    </ui-drop-down>
+    <ui-drop-down items="${state.items}"
+        type="success"
+        text="default text">
+    </ui-drop-down>
+    <ui-drop-down items="${state.items}"
+        type="info"
+        text="default text">
+    </ui-drop-down>
+    <ui-drop-down items="${state.items}"
+        type="warning"
+        text="default text">
+    </ui-drop-down>
+    <ui-drop-down items="${state.items}"
+        type="danger"
+        text="default text">
+    </ui-drop-down>
+    <ui-drop-down items="${state.items}"
+        type="link"
+        text="default text">
+    </ui-drop-down>
+</div>
+
 </template>
 <script>
 import Button from 'vcontrol/src/Button';
+import DropDown from 'vcontrol/src/DropDown';
 import {Component} from 'vcomponent';
 
 export default class Main extends Component {
     ready() {
+        let me = this;
+        this.setState({
+            onButtonClick(event, target) {
+                alert('你点击了按钮');
+            },
+            onItemSelected(item) {
+                me.refs.dropdown.setText(item.label);
+            },
+            items: [
+                {
+                    label: 'Action',
+                    value: 1
+                },
+                {
+                    label: 'Another Action',
+                    value: 2
+                },
+                {
+                    label: 'Another Action1',
+                    value: 3
+                },
+                {
+                    isSeparator: true
+                },
+                {
+                    label: 'link',
+                    href: 'https://www.baidu.com'
+                }
+            ]
+        });
     }
 
     getComponentClasses() {
-        return [Button];
+        return [Button, DropDown];
     }
 }
 </script>
