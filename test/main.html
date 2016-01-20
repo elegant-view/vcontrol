@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div id="main"><ui-main></ui-main></div>
+<script type="text/javascript" src="../node_modules/esl/src/esl.js"></script>
+<script type="text/javascript">
+    require.config({
+        "baseUrl": "src",
+        "paths": {},
+        "packages": [
+            {
+                "name": "test",
+                "location": "../test",
+                "main": "main"
+            },
+            {
+                "name": "vcomponent",
+                "location": "../node_modules/vcomponent",
+                "main": "src/main"
+            },
+            {
+                "name": "vtpl",
+                "location": "../node_modules/vtpl",
+                "main": "src/main"
+            },
+            {
+                "name": "vcontrol",
+                "location": ".."
+            }
+        ]
+    });
+</script>
+<script type="text/javascript">
+    require(["test/main", "vcomponent"], function (Main, vc) {
+
+        let vcomponent = new vc.VComponent({
+            startNode: document.getElementById('main'),
+            endNode: document.getElementById('main')
+        });
+
+        vcomponent.registerComponents([Main.default]);
+        vcomponent.render();
+    });
+</script>
+</body>
+</html>

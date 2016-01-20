@@ -1,0 +1,18 @@
+<style>
+</style>
+<template>
+<ui-button>按钮</ui-button>
+</template>
+<script>
+import Button from 'vcontrol/src/Button';
+import {Component} from 'vcomponent';
+
+export default class Main extends Component {
+    ready() {
+    }
+
+    getComponentClasses() {
+        return [Button];
+    }
+}
+</script>

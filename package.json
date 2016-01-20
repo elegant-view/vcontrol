@@ -1,0 +1,27 @@
+{
+  "name": "vcontrol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "edp": {
+    "wwwroot": "/",
+    "depDir": "dep",
+    "srcDir": "src",
+    "loaderAutoConfig": "js,htm,html,tpl,vm,phtml",
+    "loaderUrl": "http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js",
+    "dependencies": {}
+  },
+  "devDependencies": {
+    "edp-webserver": "github:ecomfe/edp-webserver",
+    "vhcj": "github:elegant-view/vhcj"
+  },
+  "dependencies": {
+    "esl": "github:ecomfe/esl",
+    "vcomponent": "github:elegant-view/vcomponent"
+  }
+}

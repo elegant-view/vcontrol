@@ -1,0 +1,12 @@
+<style>
+</style>
+<template>
+    <button>${props.children}</button>
+</template>
+<script>
+import {Component} from 'vcomponent';
+
+export default class Button extends Component {
+    ready() {}
+}
+</script>
