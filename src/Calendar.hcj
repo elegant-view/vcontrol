@@ -1,0 +1,201 @@
+<style type="sass">
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+
+.calendar {
+    width: 20em;
+    line-height: $line-height-base + 1.5em;
+    border: 1px solid #ddd;
+    display: inline-block;
+
+    .glyphicon {
+        padding: $padding-base-vertical 0;
+        cursor: pointer;
+        color: #888;
+    }
+
+    .head {
+        @include make-row();
+        background: #e3f6f3;
+
+        .left,
+        .right {
+            @include make-xs-column(1);
+        }
+        .center {
+            @include make-xs-column(9);
+            text-align: center;
+        }
+        .button {
+            @include button-size(0, $padding-base-horizontal, $font-size-base, $line-height-base + .2em, 0);
+            border: none;
+        }
+    }
+
+    .week,
+    .day {
+        background: #fbfbfb;
+        @include make-row();
+
+        span {
+            @include make-xs-column($grid-columns/7);
+            padding: 0;
+            text-align: center;
+        }
+    }
+    .day {
+        background: #fff;
+
+        span {
+            cursor: pointer;
+
+            &:hover {
+                background: #fef8e9;
+            };
+        }
+
+        .disable {
+            cursor: default;
+            color: #aaa;
+
+            &:hover {
+                background: none;
+            }
+        }
+
+        .selected {
+            background: #e3f6f3;
+        }
+    }
+}
+</style>
+<template>
+    <div class="${props.class.join(' ')} container">
+        <div class="head">
+            <div class="left">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </div>
+            <div class="center">
+                    <ui-drop-down items="${state.years}"
+                        type="default"
+                        on-item-selected="${state.onYearChange}">
+                    </ui-drop-down>
+                    年
+                    <ui-drop-down items="${state.months}"
+                        type="default"
+                        on-item-selected="${state.onMonthChange}">
+                    </ui-drop-down>
+                    月
+            </div>
+            <div class="right">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </div>
+        </div>
+        <div class="week">
+            <span>一</span>
+            <span>二</span>
+            <span>三</span>
+            <span>四</span>
+            <span>五</span>
+            <span>六</span>
+            <span>日</span>
+        </div>
+        <div class="day">
+            <!-- for: state.days as day -->
+                <!-- if: day.isEnable -->
+                    <!-- if: day.day === state.selectedDay
+                        && state.selectedMonth === state.now.getMonth() + 1
+                        && state.selectedYear === state.now.getFullYear()
+                    -->
+                        <span class="selected">${day.day}</span>
+                    <!-- else -->
+                        <span>${day.day}</span>
+                    <!-- /if -->
+                <!-- else -->
+                    <span class="disable">${day.day}</span>
+                <!-- /if -->
+            <!-- /for -->
+        </div>
+    </div>
+</template>
+
+<script>
+import {Component} from 'vcomponent';
+import DropDown from './DropDown';
+import u from 'underscore';
+
+export default class Calendar extends Component {
+    ready() {
+        let now = new Date();
+        this.setState({
+            now,
+            selectedYear: now.getFullYear(),
+            selectedMonth: now.getMonth() + 1,
+            selectedDay: now.getDate(),
+            years: u.map(u.range(now.getFullYear() - 20, now.getFullYear() + 21), year => {
+                return {label: year, value: year, isSelected: year === now.getFullYear()};
+            }),
+            months: u.map(u.range(1, 13), month => {
+                return {label: month, value: month};
+            }),
+
+            onYearChange: u.bind(this.onYearChange, this),
+            onMonthChange: u.bind(this.onMonthChange, this),
+
+            days: this.getCurMonthDays(now.getFullYear(), now.getMonth() + 1)
+        });
+    }
+
+    onYearChange(item) {
+        this.setState({
+            selectedYear: item.value,
+            days: this.getCurMonthDays(
+                item.value,
+                this.state.get('selectedMonth')
+            )
+        });
+    }
+
+    onMonthChange(item) {
+        this.setState({
+            selectedMonth: item.value,
+            days: this.getCurMonthDays(
+                this.state.get('selectedYear'),
+                item.value
+            )
+        });
+    }
+
+    /**
+     * 获取在当前月要显示出来的天
+     *
+     * @param  {number} year 年
+     * @param  {number} month 月
+     * @return {Array.<number>}
+     */
+    getCurMonthDays(year, month) {
+        let days = [];
+        let dt = new Date(year, month - 1, 1);
+        let firstDayInWeek = dt.getDay() - 2;
+
+        dt.setDate(-firstDayInWeek);
+        let nextTotalMonth = year * 12 + month + 1;
+        while (true) {
+            let day = dt.getDate();
+            days.push({day, isEnable: dt.getMonth() + 1 === month});
+            dt.setDate(day + 1);
+
+            let curTotalMonth = dt.getFullYear() * 12 + dt.getMonth() + 1;
+            if (curTotalMonth === nextTotalMonth && dt.getDay() === 1) {
+                break;
+            }
+        }
+
+        return days;
+    }
+
+    getComponentClasses() {
+        return [DropDown];
+    }
+}
+</script>

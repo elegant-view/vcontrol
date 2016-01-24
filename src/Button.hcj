@@ -22,13 +22,13 @@ export default class Button extends Component {
         this.state.set('onClick', this.onClick.bind(this));
     }
 
-    beforeRender(props, state) {
-        let btnType = props.get('type');
+    beforeRender() {
+        let btnType = this.props.get('type');
         if (u.isString(btnType)) {
             btnType = [btnType];
         }
         if (u.isArray(btnType)) {
-            return {class: u.map(btnType, t => `btn-${t}`)};
+            this.setState({class: u.map(btnType, t => `btn-${t}`)});
         }
     }
 

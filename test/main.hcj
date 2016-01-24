@@ -3,8 +3,10 @@
     margin: 10px;
 }
 </style>
+
+
 <template>
-<div class="${props.class}">
+<!--<div class="${props.class}">
     <ui-button on-click="${state.onButtonClick}">no type</ui-button>
     <ui-button type="default">default</ui-button>
     <ui-button type="primary">primary</ui-button>
@@ -45,23 +47,26 @@
         type="link"
         text="default text">
     </ui-drop-down>
+</div>-->
+<div class="${props.class}">
+    <ui-calendar></ui-calendar>
 </div>
-
 </template>
+
 <script>
 import Button from 'vcontrol/src/Button';
 import DropDown from 'vcontrol/src/DropDown';
+import Calendar from 'vcontrol/src/Calendar';
 import {Component} from 'vcomponent';
+import u from 'underscore';
 
 export default class Main extends Component {
     ready() {
         let me = this;
         this.setState({
+            u,
             onButtonClick(event, target) {
                 alert('你点击了按钮');
-            },
-            onItemSelected(item) {
-                me.refs.dropdown.setText(item.label);
             },
             items: [
                 {
@@ -88,7 +93,7 @@ export default class Main extends Component {
     }
 
     getComponentClasses() {
-        return [Button, DropDown];
+        return [Button, DropDown, Calendar];
     }
 }
 </script>

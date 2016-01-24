@@ -10,13 +10,13 @@
         <ui-button class="dropdown-toggle"
             type="${props.type}"
             on-click="${state.onClick}">
-            ${state.text}<span class="caret"></span>
+            ${state.selected.label}<span class="caret"></span>
         </ui-button>
         <ul class="dropdown-menu">
-            <!-- for: ${props.items} as ${item} -->
-                <!-- if: ${item.isSeparator} -->
+            <!-- for: props.items as item -->
+                <!-- if: item.isSeparator -->
                     <li role="separator" class="divider"></li>
-                <!-- elif: ${item.href} -->
+                <!-- elif: item.href -->
                     <li>
                         <a href="${item.href}">${item.label}</a>
                     </li>
@@ -38,13 +38,16 @@ export default class DropDown extends Component {
         this.setState({
             onClick: u.bind(this.onClick, this),
             onOutClick: u.bind(this.onOutClick, this),
-            onItemClick: u.bind(this.onItemClick, this),
-            text: this.props.get('text')
+            onItemClick: u.bind(this.onItemClick, this)
         });
     }
 
-    setText(text) {
-        this.setState({text});
+    beforeRender() {
+        let items = this.props.get('items') || [];
+        let selected = u.find(items, item => item.isSelected);
+        this.setState({
+            selected: selected ? selected : (items.length ? items[0] : {label: ''})
+        });
     }
 
     getComponentClasses() {
@@ -52,7 +55,15 @@ export default class DropDown extends Component {
     }
 
     onItemClick(item) {
-        this.setState('isOpen', false);
+        let items = this.props.get('items');
+        u.forEach(items, item => item.isSelected = false);
+
+        item.isSelected = true;
+        this.setState({
+            isOpen: false,
+            items
+        });
+
         let onItemSelected = this.props.get('onItemSelected');
         if (u.isFunction(onItemSelected)) {
             onItemSelected(item);

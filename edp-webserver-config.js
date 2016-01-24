@@ -1,7 +1,7 @@
 var path = require('path');
 var sass = require('node-sass');
 
-exports.port = 8848;
+exports.port = 7000;
 exports.directoryIndexes = true;
 exports.documentRoot = __dirname;
 
