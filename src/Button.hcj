@@ -18,12 +18,11 @@ import {Component} from 'vcomponent';
 import u from 'underscore';
 
 export default class Button extends Component {
-    ready() {
-        this.state.set('onClick', this.onClick.bind(this));
-    }
 
-    beforeRender() {
-        let btnType = this.props.get('type');
+    ready() {
+        this.setState('onClick', this.onClick.bind(this));
+
+        let btnType = this.props.type;
         if (u.isString(btnType)) {
             btnType = [btnType];
         }
@@ -33,7 +32,7 @@ export default class Button extends Component {
     }
 
     onClick(event) {
-        let onClick = this.props.get('onClick');
+        let onClick = this.props.onClick;
         if (onClick instanceof Function) {
             onClick(event, this);
         }

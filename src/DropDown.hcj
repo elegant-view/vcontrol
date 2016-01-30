@@ -40,14 +40,19 @@ export default class DropDown extends Component {
             onOutClick: u.bind(this.onOutClick, this),
             onItemClick: u.bind(this.onItemClick, this)
         });
+        this.setSelectedIndex(parseInt(this.props.selectedIndex, 10) || 0);
     }
 
-    beforeRender() {
-        let items = this.props.get('items') || [];
-        let selected = u.find(items, item => item.isSelected);
-        this.setState({
-            selected: selected ? selected : (items.length ? items[0] : {label: ''})
+    propsChange() {
+        this.setSelectedIndex(parseInt(this.props.selectedIndex, 10) || 0);
+    }
+
+    setSelectedIndex(index) {
+        let items = this.props.items || [];
+        let selected = u.find(items, (item, i) => {
+            return i === index;
         });
+        this.setState({selected});
     }
 
     getComponentClasses() {
@@ -55,16 +60,17 @@ export default class DropDown extends Component {
     }
 
     onItemClick(item) {
-        let items = this.props.get('items');
+        let items = this.props.items;
         u.forEach(items, item => item.isSelected = false);
 
         item.isSelected = true;
         this.setState({
             isOpen: false,
-            items
+            items,
+            selected: item
         });
 
-        let onItemSelected = this.props.get('onItemSelected');
+        let onItemSelected = this.props.onItemSelected;
         if (u.isFunction(onItemSelected)) {
             onItemSelected(item);
         }
@@ -75,7 +81,7 @@ export default class DropDown extends Component {
     }
 
     onClick() {
-        let isOpen = this.state.get('isOpen');
+        let isOpen = this.state.isOpen;
         this.setState('isOpen', !isOpen);
     }
 }

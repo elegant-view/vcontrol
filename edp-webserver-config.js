@@ -7,11 +7,13 @@ exports.documentRoot = __dirname;
 
 var babelCompiler = require('edp-webserver/lib/handlers/babel')(
     {
-        presets: [require("babel-preset-es2015")],
-        plugins: [require("babel-plugin-transform-es2015-modules-amd")]
-    },
-    {
-        babel: require('babel-core')
+        "stage": 0,
+        "modules": "amd",
+        "compact": false,
+        "ast": false,
+        "blacklist": ["strict"],
+        "externalHelpers": true,
+        "sourceMaps": "inline"
     }
 );
 exports.getLocations = function () {
@@ -58,7 +60,6 @@ exports.getLocations = function () {
                         context.content = code;
                         context.start();
                     }).catch(function (error) {
-                        console.error(error.stack);
                         context.content = 'Server Error';
                         context.status = 500;
                         context.start();

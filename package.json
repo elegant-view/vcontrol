@@ -18,6 +18,7 @@
     "dependencies": {}
   },
   "devDependencies": {
+    "babel-plugin-external-helpers": "^6.4.0",
     "edp-webserver": "github:ecomfe/edp-webserver",
     "node-sass": "^3.4.2",
     "vhcj": "github:elegant-view/vhcj"

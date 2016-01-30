@@ -1,4 +1,6 @@
 <style type="sass">
+$grid-gutter-width: 0;
+
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 
@@ -20,10 +22,11 @@
 
         .left,
         .right {
-            @include make-xs-column(1);
+            @include make-xs-column(2);
+            text-align: center;
         }
         .center {
-            @include make-xs-column(9);
+            @include make-xs-column(8);
             text-align: center;
         }
         .button {
@@ -73,22 +76,24 @@
     <div class="${props.class.join(' ')} container">
         <div class="head">
             <div class="left">
-                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="glyphicon glyphicon-chevron-left" on-click="state.onPreMonthClick()"></span>
             </div>
             <div class="center">
                     <ui-drop-down items="${state.years}"
                         type="default"
-                        on-item-selected="${state.onYearChange}">
+                        on-item-selected="${state.onYearChange}"
+                        selected-index="${state.yearsSelectedIndex}">
                     </ui-drop-down>
                     年
                     <ui-drop-down items="${state.months}"
                         type="default"
-                        on-item-selected="${state.onMonthChange}">
+                        on-item-selected="${state.onMonthChange}"
+                        selected-index="${state.monthsSelectedIndex}">
                     </ui-drop-down>
                     月
             </div>
             <div class="right">
-                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="glyphicon glyphicon-chevron-right" on-click="state.onNextMonthClick()"></span>
             </div>
         </div>
         <div class="week">
@@ -103,9 +108,9 @@
         <div class="day">
             <!-- for: state.days as day -->
                 <!-- if: day.isEnable -->
-                    <!-- if: day.day === state.selectedDay
-                        && state.selectedMonth === state.now.getMonth() + 1
-                        && state.selectedYear === state.now.getFullYear()
+                    <!-- if: state.selectedDate.getFullYear() === state.showDate.getFullYear()
+                        && state.selectedDate.getMonth() === state.showDate.getMonth()
+                        && day.day === state.selectedDate.getDate()
                     -->
                         <span class="selected">${day.day}</span>
                     <!-- else -->
@@ -126,44 +131,118 @@ import u from 'underscore';
 
 export default class Calendar extends Component {
     ready() {
-        let now = new Date();
         this.setState({
-            now,
-            selectedYear: now.getFullYear(),
-            selectedMonth: now.getMonth() + 1,
-            selectedDay: now.getDate(),
-            years: u.map(u.range(now.getFullYear() - 20, now.getFullYear() + 21), year => {
-                return {label: year, value: year, isSelected: year === now.getFullYear()};
-            }),
-            months: u.map(u.range(1, 13), month => {
-                return {label: month, value: month};
-            }),
-
             onYearChange: u.bind(this.onYearChange, this),
             onMonthChange: u.bind(this.onMonthChange, this),
-
-            days: this.getCurMonthDays(now.getFullYear(), now.getMonth() + 1)
+            onPreMonthClick: u.bind(this.onPrevMonthClick, this),
+            onNextMonthClick: u.bind(this.onNextMonthClick, this)
         });
+    }
+
+    propsChange() {
+        let now = new Date();
+        let minDate = this.props.minDate || new Date(now.getFullYear() - 10, 1, 1);
+        let maxDate = this.props.maxDate || new Date(now.getFullYear() + 10, 12, 31);
+        let selectedDate = this.props.value || new Date();
+        let showDate = new Date(selectedDate.getTime());
+
+        let years = u.map(
+            u.range(minDate.getFullYear(), maxDate.getFullYear() - 1),
+            year => {
+                return {value: year, label: year};
+            }
+        );
+        let months = u.map(u.range(1, 13), month => {
+            return {value: month, label: month}
+        });
+        this.setState({months, selectedDate, showDate});
+
+        this.setYearShowIndex(years[0]);
+        this.setMonthShowIndex(months[0]);
+        this.setDays();
+
+        function getLastMonth() {
+            if (showDate.getFullYear() < maxDate.getFullYear()) {
+                return 12;
+            }
+
+            return maxDate.getMonth() + 1;
+        }
+
+        function getFirstMonth() {
+            if (showDate.getFullYear() > minDate.getFullYear()) {
+                return 1;
+            }
+
+            return minDate.getMonth() + 1;
+        }
+    }
+
+    setYearShowIndex(selectedYear) {
+        let years = this.state.years;
+        u.find(years, (year, index) => {
+            if (year.value === selectedYear.value) {
+                this.state.showDate.setFullYear(selectedYear.value);
+                this.setState({
+                    yearsSelectedIndex: index,
+                    showDate: this.state.showDate
+                });
+                return true;
+            }
+        });
+    }
+
+    setMonthShowIndex(selectedMonth) {
+        let months = this.state.months;
+        u.find(months, (month, index) => {
+            if (month.value === selectedMonth.value) {
+                this.state.showDate.setMonth(selectedMonth.value - 1);
+                this.setState({
+                    monthsSelectedIndex: index,
+                    showDate: this.state.showDate
+                });
+                return true;
+            }
+        });
+    }
+
+    setDays() {
+        let showDate = this.state.showDate;
+        let days = this.getCurMonthDays(showDate.getFullYear(), showDate.getMonth() + 1);
+        this.setState({days});
+    }
+
+    onPrevMonthClick() {
+        let curMonth = this.state.showDate.getMonth();
+        if (curMonth > 0) {
+            this.state.showDate.setMonth(curMonth - 1);
+        }
+        else {
+            this.state.showDate.setFullYear(this.state.showDate.getFullYear() - 1, 11);
+        }
+
+        this.setYearShowIndex({value: this.state.showDate.getFullYear()});
+        this.setMonthShowIndex({value: this.state.showDate.getMonth() + 1});
+        this.setDays();
+    }
+
+    onNextMonthClick() {
+        this.state.showDate.setMonth(this.state.showDate.getMonth() + 1);
+
+        this.setYearShowIndex({value: this.state.showDate.getFullYear()});
+        this.setMonthShowIndex({value: this.state.showDate.getMonth() + 1});
+        this.setDays();
     }
 
     onYearChange(item) {
-        this.setState({
-            selectedYear: item.value,
-            days: this.getCurMonthDays(
-                item.value,
-                this.state.get('selectedMonth')
-            )
-        });
+        this.setYearShowIndex(item);
+        this.setMonthShowIndex(this.state.months[0]);
+        this.setDays();
     }
 
     onMonthChange(item) {
-        this.setState({
-            selectedMonth: item.value,
-            days: this.getCurMonthDays(
-                this.state.get('selectedYear'),
-                item.value
-            )
-        });
+        this.setMonthShowIndex(item);
+        this.setDays();
     }
 
     /**

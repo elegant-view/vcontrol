@@ -6,7 +6,7 @@
 
 
 <template>
-<!--<div class="${props.class}">
+<div class="${props.class}">
     <ui-button on-click="${state.onButtonClick}">no type</ui-button>
     <ui-button type="default">default</ui-button>
     <ui-button type="primary">primary</ui-button>
@@ -19,8 +19,6 @@
 <div class="${props.class}">
     <ui-drop-down items="${state.items}"
         on-item-selected="${state.onItemSelected}"
-        text="default text"
-        type="default"
         ref="dropdown">
     </ui-drop-down>
     <ui-drop-down items="${state.items}"
@@ -47,7 +45,7 @@
         type="link"
         text="default text">
     </ui-drop-down>
-</div>-->
+</div>
 <div class="${props.class}">
     <ui-calendar></ui-calendar>
 </div>
