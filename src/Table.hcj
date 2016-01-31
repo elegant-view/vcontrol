@@ -3,19 +3,22 @@
 </style>
 
 <template>
-<table class="table">
-<thead>
-    <tr>
-        <td>表格</td>
-    </tr>
-</thead>
-</table>
+<ui-thead fields="${props.fields}"></ui-thead>
 </template>
+
+<!-- <table class="table">
+    <ui-thead fields="${props.fields}"></ui-thead>
+    <ui-tbody rows="${props.rows}"></ui-tbody>
+</table> -->
 
 <script>
 import {Component} from 'vcomponent';
+import Thead from './table/Thead';
+import Tbody from './table/Tbody';
 
 export default class Table extends Component {
-
+    getComponentClasses() {
+        return [Tbody, Thead];
+    }
 }
 </script>

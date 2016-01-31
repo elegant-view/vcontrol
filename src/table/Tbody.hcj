@@ -1,0 +1,22 @@
+<style></style>
+
+<template>
+    <tbody class="${props.class.join(' ')}">
+        <!-- for: props.rows as row -->
+            <ui-trow items="${row.columns}"></ui-trow>
+        <!-- /for -->
+    </tbody>
+</template>
+
+<script>
+import {Component} from 'vcomponent';
+import Trow from './Trow';
+
+export default class Tbody extends Component {
+    ready() {}
+
+    getComponentClasses() {
+        return [Trow];
+    }
+}
+</script>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../src/main.scss">
+</head>
+<body>
+<div id="main">
+    <ui-table fields="${fields}" rows="${rows}"></ui-table>
+</div>
+<script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
+<script type="text/javascript">
+    require.config({
+        "baseUrl": "/src",
+        "paths": {},
+        "packages": [
+            {
+                "name": "test",
+                "location": "../test",
+                "main": "main"
+            },
+            {
+                "name": "vcomponent",
+                "location": "../node_modules/vcomponent",
+                "main": "src/main"
+            },
+            {
+                "name": "vtpl",
+                "location": "../node_modules/vtpl",
+                "main": "src/main"
+            },
+            {
+                "name": "vcontrol",
+                "location": ".."
+            },
+            {
+                "name": "underscore",
+                "location": "../node_modules/underscore",
+                "main": "underscore"
+            }
+        ]
+    });
+</script>
+<script type="text/javascript">
+    require(["vcomponent", "vcontrol/src/Table"], function (vc, Table) {
+        var vcomponent = new vc.VComponent({
+            startNode: document.getElementById('main'),
+            endNode: document.getElementById('main')
+        });
+        vcomponent.registerComponents([Table]);
+        vcomponent.render();
+
+        vcomponent.setData({
+            fields: [
+                {
+                    getLabel: function () {
+                        return 'fields label';
+                    }
+                }
+            ],
+            rows: [
+                {
+                    getLabel: function () {
+                        return 'label';
+                    }
+                }
+            ]
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<style></style>
+
+<template>
+    <!-- for: props.items as item -->
+        <tr><td>${item.label ? item.label : item.getLabel()}</td></tr>
+    <!-- /for -->
+</template>
+
+<script>
+import {Component} from 'vcomponent';
+
+export default class Trow extends Component {
+    ready() {}
+}
+</script>
