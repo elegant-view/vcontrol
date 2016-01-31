@@ -12,8 +12,7 @@ var babelCompiler = require('edp-webserver/lib/handlers/babel')(
         "compact": false,
         "ast": false,
         "blacklist": ["strict"],
-        "externalHelpers": true,
-        "sourceMaps": "inline"
+        "externalHelpers": false
     }
 );
 exports.getLocations = function () {
@@ -60,6 +59,7 @@ exports.getLocations = function () {
                         context.content = code;
                         context.start();
                     }).catch(function (error) {
+                        console.log(error.stack);
                         context.content = 'Server Error';
                         context.status = 500;
                         context.start();

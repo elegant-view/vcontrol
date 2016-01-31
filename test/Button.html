@@ -5,7 +5,16 @@
     <link rel="stylesheet" type="text/css" href="../src/main.scss">
 </head>
 <body>
-<div id="main"><ui-main></ui-main></div>
+<div id="main">
+    <ui-button on-click="${onButtonClick}">no type</ui-button>
+    <ui-button type="default">default</ui-button>
+    <ui-button type="primary">primary</ui-button>
+    <ui-button type="success">success</ui-button>
+    <ui-button type="info">info</ui-button>
+    <ui-button type="warning">warning</ui-button>
+    <ui-button type="danger">danger</ui-button>
+    <ui-button type="link">link</ui-button>
+</div>
 <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
 <script type="text/javascript">
     require.config({
@@ -40,15 +49,16 @@
     });
 </script>
 <script type="text/javascript">
-    require(["test", "vcomponent"], function (Main, vc) {
-
+    require(["vcomponent", "vcontrol/src/Button"], function (vc, Button) {
         var vcomponent = new vc.VComponent({
             startNode: document.getElementById('main'),
             endNode: document.getElementById('main')
         });
-
-        vcomponent.registerComponents([Main]);
+        vcomponent.registerComponents([Button]);
         vcomponent.render();
+        vcomponent.setData('onButtonClick', function () {
+            alert('button clicked');
+        });
     });
 </script>
 </body>

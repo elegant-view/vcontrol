@@ -1,0 +1,21 @@
+<style type="sass">
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+</style>
+
+<template>
+<table class="table">
+<thead>
+    <tr>
+        <td>表格</td>
+    </tr>
+</thead>
+</table>
+</template>
+
+<script>
+import {Component} from 'vcomponent';
+
+export default class Table extends Component {
+
+}
+</script>

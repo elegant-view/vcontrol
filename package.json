@@ -19,13 +19,14 @@
   },
   "devDependencies": {
     "babel-plugin-external-helpers": "^6.4.0",
-    "edp-webserver": "github:ecomfe/edp-webserver",
+    "edp": "^1.1.1",
+    "edp-webserver": "^1.2.5",
     "node-sass": "^3.4.2",
+    "requirejs": "^2.1.22",
     "vhcj": "github:elegant-view/vhcj"
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.6",
-    "esl": "github:ecomfe/esl",
     "underscore": "^1.8.3",
     "vcomponent": "github:elegant-view/vcomponent"
   }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../src/main.scss">
+</head>
+<body>
+<div id="main">
+    <ui-drop-down items="${items}"
+        on-item-selected="${onItemSelected}"
+        ref="dropdown">
+    </ui-drop-down>
+    <ui-drop-down items="${items}"
+        type="primary"
+        text="default text">
+    </ui-drop-down>
+    <ui-drop-down items="${items}"
+        type="success"
+        text="default text">
+    </ui-drop-down>
+    <ui-drop-down items="${items}"
+        type="info"
+        text="default text">
+    </ui-drop-down>
+    <ui-drop-down items="${items}"
+        type="warning"
+        text="default text">
+    </ui-drop-down>
+    <ui-drop-down items="${items}"
+        type="danger"
+        text="default text">
+    </ui-drop-down>
+    <ui-drop-down items="${items}"
+        type="link"
+        text="default text">
+    </ui-drop-down>
+</div>
+<script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
+<script type="text/javascript">
+    require.config({
+        "baseUrl": "/src",
+        "paths": {},
+        "packages": [
+            {
+                "name": "test",
+                "location": "../test",
+                "main": "main"
+            },
+            {
+                "name": "vcomponent",
+                "location": "../node_modules/vcomponent",
+                "main": "src/main"
+            },
+            {
+                "name": "vtpl",
+                "location": "../node_modules/vtpl",
+                "main": "src/main"
+            },
+            {
+                "name": "vcontrol",
+                "location": ".."
+            },
+            {
+                "name": "underscore",
+                "location": "../node_modules/underscore",
+                "main": "underscore"
+            }
+        ]
+    });
+</script>
+<script type="text/javascript">
+    require(["vcomponent", "vcontrol/src/DropDown"], function (vc, DropDown) {
+        var vcomponent = new vc.VComponent({
+            startNode: document.getElementById('main'),
+            endNode: document.getElementById('main')
+        });
+        vcomponent.registerComponents([DropDown]);
+        vcomponent.render();
+        vcomponent.setData({
+            onItemSelected: function () {
+                alert('item selected');
+            },
+            items: [
+                {
+                    label: 'Action',
+                    value: 1
+                },
+                {
+                    label: 'Another Action',
+                    value: 2
+                },
+                {
+                    label: 'Another Action1',
+                    value: 3
+                },
+                {
+                    isSeparator: true
+                },
+                {
+                    label: 'link',
+                    href: 'https://www.baidu.com'
+                }
+            ]
+        });
+    });
+</script>
+</body>
+</html>
