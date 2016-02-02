@@ -3,7 +3,7 @@
 <template>
     <tbody class="${props.class.join(' ')}">
         <!-- for: props.rows as row -->
-            <ui-trow items="${row.columns}"></ui-trow>
+            <ui-trow items="${row}"></ui-trow>
         <!-- /for -->
     </tbody>
 </template>

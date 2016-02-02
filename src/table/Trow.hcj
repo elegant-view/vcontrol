@@ -1,9 +1,11 @@
 <style></style>
 
 <template>
-    <!-- for: props.items as item -->
-        <tr><td>${item.label ? item.label : item.getLabel()}</td></tr>
-    <!-- /for -->
+    <tr>
+        <!-- for: props.items as item -->
+            <td>${item.label ? item.label : item.getLabel()}</td>
+        <!-- /for -->
+    </tr>
 </template>
 
 <script>
