@@ -3,13 +3,11 @@
 </style>
 
 <template>
-<ui-thead fields="${props.fields}"></ui-thead>
-</template>
-
-<!-- <table class="table">
+<table class="table">
     <ui-thead fields="${props.fields}"></ui-thead>
     <ui-tbody rows="${props.rows}"></ui-tbody>
-</table> -->
+</table>
+</template>
 
 <script>
 import {Component} from 'vcomponent';

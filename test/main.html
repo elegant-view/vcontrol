@@ -1,55 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="../src/main.scss">
 </head>
 <body>
-<div id="main"><ui-main></ui-main></div>
-<script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
-<script type="text/javascript">
-    require.config({
-        "baseUrl": "/src",
-        "paths": {},
-        "packages": [
-            {
-                "name": "test",
-                "location": "../test",
-                "main": "main"
-            },
-            {
-                "name": "vcomponent",
-                "location": "../node_modules/vcomponent",
-                "main": "src/main"
-            },
-            {
-                "name": "vtpl",
-                "location": "../node_modules/vtpl",
-                "main": "src/main"
-            },
-            {
-                "name": "vcontrol",
-                "location": ".."
-            },
-            {
-                "name": "underscore",
-                "location": "../node_modules/underscore",
-                "main": "underscore"
-            }
-        ]
-    });
-</script>
-<script type="text/javascript">
-    require(["test", "vcomponent"], function (Main, vc) {
-
-        var vcomponent = new vc.VComponent({
-            startNode: document.getElementById('main'),
-            endNode: document.getElementById('main')
-        });
-
-        vcomponent.registerComponents([Main]);
-        vcomponent.render();
-    });
-</script>
+    <div>
+        <ul>
+            <li><a href="./Button.html">Button</a></li>
+            <li><a href="./Table.html">Table</a></li>
+        </ul>
+    </div>
 </body>
 </html>

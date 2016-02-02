@@ -19,7 +19,7 @@ exports.getLocations = function () {
     return [
         {
             location: /\/$/,
-            handler: home('test/main.html')
+            handler: redirect('test/main.html', false)
         },
         {
             location: /\.scss$/,

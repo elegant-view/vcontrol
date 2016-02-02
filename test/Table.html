@@ -6,6 +6,8 @@
 </head>
 <body>
 <div id="main">
+    <!-- <ui-trow items="${rows}"></ui-trow> -->
+    <!-- <ui-thead fields="${fields}"></ui-thead> -->
     <ui-table fields="${fields}" rows="${rows}"></ui-table>
 </div>
 <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
@@ -42,31 +44,44 @@
     });
 </script>
 <script type="text/javascript">
-    require(["vcomponent", "vcontrol/src/Table"], function (vc, Table) {
-        var vcomponent = new vc.VComponent({
-            startNode: document.getElementById('main'),
-            endNode: document.getElementById('main')
-        });
-        vcomponent.registerComponents([Table]);
-        vcomponent.render();
+    require(
+        [
+            "vcomponent",
+            "vcontrol/src/Table",
+            "vcontrol/src/table/Trow",
+            "vcontrol/src/table/Thead"
+        ],
+        function (
+            vc,
+            Table,
+            Trow,
+            Thead
+        ) {
+            var vcomponent = new vc.VComponent({
+                startNode: document.getElementById('main'),
+                endNode: document.getElementById('main')
+            });
+            vcomponent.registerComponents([Table, Trow, Thead]);
+            vcomponent.render();
 
-        vcomponent.setData({
-            fields: [
-                {
-                    getLabel: function () {
-                        return 'fields label';
+            vcomponent.setData({
+                fields: [
+                    {
+                        getLabel: function () {
+                            return 'fields label';
+                        }
                     }
-                }
-            ],
-            rows: [
-                {
-                    getLabel: function () {
-                        return 'label';
+                ],
+                rows: [
+                    {
+                        getLabel: function () {
+                            return 'label';
+                        }
                     }
-                }
-            ]
-        });
-    });
+                ]
+            });
+        }
+    );
 </script>
 </body>
 </html>
