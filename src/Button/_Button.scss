@@ -2,6 +2,142 @@
 @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/mixins";
 
-.#{$ui-prefix}-button {
+$button-selector: ".#{$ui-prefix}-button";
+
+#{$button-selector} {
+    display: inline-block;
+    font-weight: $btn-font-weight;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: $input-btn-border-width solid transparent;
+    @include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $line-height, $btn-border-radius);
+    @include transition(all .2s ease-in-out);
+    &,
+    &.active,
+    &:active {
+        &.focus,
+        &:focus {
+            @include tab-focus();
+        }
+    }
+    @include hover-focus {
+        text-decoration: none;
+    }
+    &.focus {
+        text-decoration: none;
+    }
+    &.active,
+    &:active {
+        background-image: none;
+        outline: 0;
+        @include box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
+    }
+    &.disabled,
+    &:disabled {
+        cursor: $cursor-disabled;
+        opacity: 0.65;
+        @include box-shadow(none);
+    }
+}
+
+a#{$button-selector}.disabled,
+fieldset[disabled] a#{$button-selector} {
+    pointer-events: none;
+}
+
+#{$button-selector}-primary {
     @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+}
+#{$button-selector}-secondary {
+    @include button-variant($btn-secondary-color, $btn-secondary-bg, $btn-secondary-border);
+}
+#{$button-selector}-info {
+    @include button-variant($btn-info-color, $btn-info-bg, $btn-info-border);
+}
+#{$button-selector}-success {
+    @include button-variant($btn-success-color, $btn-success-bg, $btn-success-border);
+}
+#{$button-selector}-warning {
+    @include button-variant($btn-warning-color, $btn-warning-bg, $btn-warning-border);
+}
+#{$button-selector}-danger {
+    @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
+}
+
+#{$button-selector}-primary-outline {
+    @include button-outline-variant($btn-primary-bg);
+}
+#{$button-selector}-secondary-outline {
+    @include button-outline-variant($btn-secondary-border);
+}
+#{$button-selector}-info-outline {
+    @include button-outline-variant($btn-info-bg);
+}
+#{$button-selector}-success-outline {
+    @include button-outline-variant($btn-success-bg);
+}
+#{$button-selector}-warning-outline {
+    @include button-outline-variant($btn-warning-bg);
+}
+#{$button-selector}-danger-outline {
+    @include button-outline-variant($btn-danger-bg);
+}
+
+#{$button-selector}-link {
+    font-weight: normal;
+    color: $link-color;
+    border-radius: 0;
+    &,
+    &.active,
+    &:active,
+    &:disabled {
+        background-color: transparent;
+        @include box-shadow(none);
+    }
+    &,
+    &:active,
+    &:focus {
+        border-color: transparent;
+    }
+    @include hover {
+        border-color: transparent;
+    }
+    @include hover-focus {
+        color: $link-hover-color;
+        text-decoration: $link-hover-decoration;
+        background-color: transparent;
+    }
+    &:disabled {
+        @include hover-focus {
+            color: $btn-link-disabled-color;
+            text-decoration: none;
+        }
+    }
+}
+
+#{$button-selector}-lg {
+    @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $font-size-lg, $line-height-lg, $btn-border-radius-lg);
+}
+#{$button-selector}-sm {
+    @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $font-size-sm, $line-height-sm, $btn-border-radius-sm);
+}
+
+#{$button-selector}-block {
+    display: block;
+    width: 100%;
+}
+
+#{$button-selector}-block + #{$button-selector}-block {
+    margin-top: 5px;
+}
+
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    &#{$button-selector}-block {
+        width: 100%;
+    }
 }
