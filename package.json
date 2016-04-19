@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "edp webserver"
+    "dev.bak": "edp webserver",
+    "dev": "node node_modules/dev-server/src/main.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,14 +19,19 @@
     "dependencies": {}
   },
   "devDependencies": {
+    "babel-core": "^6.7.6",
     "babel-plugin-external-helpers": "^6.4.0",
-    "edp": "^1.1.1",
-    "edp-webserver": "^1.2.5",
+    "babel-plugin-transform-es2015-modules-amd": "^6.6.5",
+    "babel-plugin-transform-runtime": "^6.5.2",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-runtime": "^6.5.0",
+    "dev-server": "github:elegant-view/dev-server",
     "node-sass": "^3.4.2",
-    "requirejs": "^2.1.22",
-    "vhcj": "github:elegant-view/vhcj"
+    "requirejs": "^2.2.0"
   },
   "dependencies": {
+    "bootstrap": "^4.0.0-alpha.2",
     "bootstrap-sass": "^3.3.6",
     "underscore": "^1.8.3",
     "vcomponent": "github:elegant-view/vcomponent"

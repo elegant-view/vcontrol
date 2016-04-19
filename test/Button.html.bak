@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../src/main.scss">
+</head>
+<body>
+<div id="main">
+    <ui-button on-click="${onButtonClick}">no type</ui-button>
+    <ui-button type="default">default</ui-button>
+    <ui-button type="primary">primary</ui-button>
+    <ui-button type="success">success</ui-button>
+    <ui-button type="info">info</ui-button>
+    <ui-button type="warning">warning</ui-button>
+    <ui-button type="danger">danger</ui-button>
+    <ui-button type="link">link</ui-button>
+</div>
+<script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
+<script type="text/javascript">
+    require.config({
+        "baseUrl": "/src",
+        "paths": {},
+        "packages": [
+            {
+                "name": "test",
+                "location": "../test",
+                "main": "main"
+            },
+            {
+                "name": "vcomponent",
+                "location": "../node_modules/vcomponent",
+                "main": "src/main"
+            },
+            {
+                "name": "vtpl",
+                "location": "../node_modules/vtpl",
+                "main": "src/main"
+            },
+            {
+                "name": "vcontrol",
+                "location": ".."
+            },
+            {
+                "name": "underscore",
+                "location": "../node_modules/underscore",
+                "main": "underscore"
+            },
+            {
+                "name": "babel-runtime",
+                "location": "../node_modules/babel-runtime"
+            }
+        ]
+    });
+</script>
+<script type="text/javascript">
+    require(["vcomponent", "vcontrol/src/Button"], function (vc, Button) {
+        var vcomponent = new vc.VComponent({
+            startNode: document.getElementById('main'),
+            endNode: document.getElementById('main')
+        });
+        vcomponent.registerComponents([Button]);
+        vcomponent.render();
+        vcomponent.setData('onButtonClick', function () {
+            alert('button clicked');
+        });
+    });
+</script>
+</body>
+</html>

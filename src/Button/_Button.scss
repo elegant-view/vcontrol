@@ -1,0 +1,7 @@
+@import "../variables";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+
+.#{$ui-prefix}-button {
+    @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+}

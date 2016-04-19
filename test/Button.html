@@ -1,65 +1,39 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="../src/main.scss">
-</head>
-<body>
-<div id="main">
-    <ui-button on-click="${onButtonClick}">no type</ui-button>
-    <ui-button type="default">default</ui-button>
-    <ui-button type="primary">primary</ui-button>
-    <ui-button type="success">success</ui-button>
-    <ui-button type="info">info</ui-button>
-    <ui-button type="warning">warning</ui-button>
-    <ui-button type="danger">danger</ui-button>
-    <ui-button type="link">link</ui-button>
-</div>
-<script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
-<script type="text/javascript">
-    require.config({
-        "baseUrl": "/src",
-        "paths": {},
-        "packages": [
-            {
-                "name": "test",
-                "location": "../test",
-                "main": "main"
-            },
-            {
-                "name": "vcomponent",
-                "location": "../node_modules/vcomponent",
-                "main": "src/main"
-            },
-            {
-                "name": "vtpl",
-                "location": "../node_modules/vtpl",
-                "main": "src/main"
-            },
-            {
-                "name": "vcontrol",
-                "location": ".."
-            },
-            {
-                "name": "underscore",
-                "location": "../node_modules/underscore",
-                "main": "underscore"
-            }
-        ]
-    });
-</script>
-<script type="text/javascript">
-    require(["vcomponent", "vcontrol/src/Button"], function (vc, Button) {
-        var vcomponent = new vc.VComponent({
-            startNode: document.getElementById('main'),
-            endNode: document.getElementById('main')
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="./main.scss" media="screen" title="no title" charset="utf-8">
+    </head>
+    <body>
+        <ui-button>按钮</ui-button>
+        <script src="../node_modules/requirejs/require.js"></script>
+        <script>
+        require.config({
+            baseUrl: '../src',
+            packages: [
+                {
+                    name: 'vcomponent',
+                    location: '../node_modules/vcomponent/src',
+                    main: 'main'
+                },
+                {
+                    name: 'vtpl',
+                    location: '../node_modules/vtpl/src',
+                    main: 'main'
+                }
+            ]
         });
-        vcomponent.registerComponents([Button]);
-        vcomponent.render();
-        vcomponent.setData('onButtonClick', function () {
-            alert('button clicked');
+        require(['Button/Button', 'vcomponent'], function (Button, VComponent) {
+            VComponent = VComponent.default;
+            Button = Button.default;
+            var vcomponent = new VComponent({
+                startNode: document.body,
+                endNode: document.body
+            });
+            vcomponent.registerComponents([Button]);
+            vcomponent.render();
         });
-    });
-</script>
-</body>
+        </script>
+    </body>
 </html>
