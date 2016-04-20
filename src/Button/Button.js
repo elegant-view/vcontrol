@@ -30,8 +30,8 @@ export default class Button extends Component {
 
     [CONVERT_PROPS]() {
         const classList = this.state.classList || [`${uiPrefix}-button`];
-        if (inArray(this.props.type, TYPE_ARRAY)) {
-            classList.push(`${uiPrefix}-button-${this.props.type}`);
+        if (inArray(this.props.variant, TYPE_ARRAY)) {
+            classList.push(`${uiPrefix}-button-${this.props.variant}`);
         }
         if (inArray(this.props.size, SIZE_ARRAY)) {
             classList.push(`${uiPrefix}-button-${this.props.size}`);
