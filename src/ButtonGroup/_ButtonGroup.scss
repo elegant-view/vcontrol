@@ -1,0 +1,190 @@
+@import "../bootstrap";
+@import "../variables";
+@import "../Button/Button";
+
+$button-group-selector: ".#{$ui-prefix}-button-group";
+$button-toolbar-selector: ".#{$ui-prefix}-button-toolbar";
+
+#{$button-group-selector},
+#{$button-group-selector}-vertical {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    > #{$button-selector} {
+        position: relative;
+        float: left;
+
+        &.active,
+        &:active,
+        &:focus {
+            z-index: 2;
+        }
+        @include hover {
+            z-index: 2;
+        }
+    }
+}
+
+#{$button-group-selector} {
+    #{$button-selector} + #{$button-selector},
+    #{$button-selector} + #{$button-group-selector},
+    #{$button-group-selector} + #{$button-selector},
+    #{$button-group-selector} + #{$button-group-selector} {
+        margin-left: -$input-btn-border-width;
+    }
+}
+
+#{$button-toolbar-selector} {
+    margin-left: -5px;
+    @include clearfix();
+    #{$button-group-selector},
+    .input-group {
+        float: left;
+    }
+     > #{$button-group-selector},
+     > .input-group,
+    > #{$button-selector} {
+        margin-left: 5px;
+    }
+}
+#{$button-group-selector} > #{$button-selector}:not(:first-child):not(:last-child):not(.dropdown-toggle) {
+    border-radius: 0;
+}
+
+#{$button-group-selector} > #{$button-selector}:first-child {
+    margin-left: 0;
+    &:not(:last-child):not(.dropdown-toggle) {
+        @include border-right-radius(0);
+    }
+}
+
+#{$button-group-selector} > #{$button-selector}:last-child:not(:first-child),
+#{$button-group-selector} > .dropdown-toggle:not(:first-child) {
+    @include border-left-radius(0);
+}
+
+#{$button-group-selector} > #{$button-group-selector} {
+    float: left;
+}
+#{$button-group-selector} > #{$button-group-selector}:not(:first-child):not(:last-child) > #{$button-selector} {
+    border-radius: 0;
+}
+#{$button-group-selector} > #{$button-group-selector}:first-child:not(:last-child) {
+     > .dropdown-toggle,
+    > #{$button-selector}:last-child {
+        @include border-right-radius(0);
+    }
+}
+#{$button-group-selector} > #{$button-group-selector}:last-child:not(:first-child) > #{$button-selector}:first-child {
+    @include border-left-radius(0);
+}
+
+#{$button-group-selector} .dropdown-toggle:active,
+#{$button-group-selector}.open .dropdown-toggle {
+    outline: 0;
+}
+
+//
+
+#{$button-group-selector}-sm > #{$button-selector} {
+    @extend #{$button-selector}-sm;
+}
+#{$button-group-selector}-lg > #{$button-selector} {
+    @extend #{$button-selector}-lg;
+}
+//
+
+//
+
+#{$button-group-selector} > #{$button-selector} + .dropdown-toggle {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+#{$button-group-selector} > #{$button-selector}-lg + .dropdown-toggle {
+    padding-right: 12px;
+    padding-left: 12px;
+}
+
+
+#{$button-group-selector}.open .dropdown-toggle {
+    @include box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
+
+    &#{$button-selector}-link {
+        @include box-shadow(none);
+    }
+}
+
+#{$button-selector} .caret {
+    margin-left: 0;
+}
+
+#{$button-selector}-lg .caret {
+    border-width: $caret-width-lg $caret-width-lg 0;
+    border-bottom-width: 0;
+}
+
+.dropup #{$button-selector}-lg .caret {
+    border-width: 0 $caret-width-lg $caret-width-lg;
+}
+
+#{$button-group-selector}-vertical {
+     > #{$button-group-selector},
+     > #{$button-group-selector} > #{$button-selector},
+    > #{$button-selector} {
+        display: block;
+        float: none;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    > #{$button-group-selector} {
+        @include clearfix();
+        > #{$button-selector} {
+            float: none;
+        }
+    }
+     > #{$button-selector} + #{$button-group-selector},
+     > #{$button-group-selector} + #{$button-selector},
+     > #{$button-group-selector} + #{$button-group-selector},
+    > #{$button-selector} + #{$button-selector} {
+        margin-top: -$input-btn-border-width;
+        margin-left: 0;
+    }
+}
+#{$button-group-selector}-vertical > #{$button-selector} {
+    &:not(:first-child):not(:last-child) {
+        border-radius: 0;
+    }
+    &:first-child:not(:last-child) {
+        border-top-right-radius: $btn-border-radius;
+        @include border-bottom-radius(0);
+    }
+    &:last-child:not(:first-child) {
+        border-bottom-left-radius: $btn-border-radius;
+        @include border-top-radius(0);
+    }
+}
+#{$button-group-selector}-vertical > #{$button-group-selector}:not(:first-child):not(:last-child) > #{$button-selector} {
+    border-radius: 0;
+}
+#{$button-group-selector}-vertical > #{$button-group-selector}:first-child:not(:last-child) {
+     > .dropdown-toggle,
+    > #{$button-selector}:last-child {
+        @include border-bottom-radius(0);
+    }
+}
+#{$button-group-selector}-vertical > #{$button-group-selector}:last-child:not(:first-child) > #{$button-selector}:first-child {
+    @include border-top-radius(0);
+}
+
+[data-toggle="buttons"] {
+     > #{$button-group-selector} > #{$button-selector},
+    > #{$button-selector} {
+        input[type="checkbox"],
+        input[type="radio"] {
+            position: absolute;
+            clip: rect(0,0,0,0);
+            pointer-events: none;
+        }
+    }
+}
