@@ -11,7 +11,7 @@ server.start({
         }
     },
     sass: {
-        include: [/\/test\/.*\.scss$/],
+        include: [/\/(test|src)\/.*\.scss$/],
         compileOptions: {}
     }
 });

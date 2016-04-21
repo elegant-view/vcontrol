@@ -6,23 +6,31 @@
         <link rel="stylesheet" href="./main.scss" media="screen" title="no title" charset="utf-8">
     </head>
     <body>
-        <ui-button-group size="lg">
-            <ui-button variant="primary">按钮</ui-button>
-            <ui-button variant="primary">按钮</ui-button>
-            <ui-button variant="secondary">按钮</ui-button>
-        </ui-button-group>
-        <ui-button-toolbar>
-            <ui-button-group direction="vertical">
-                <ui-button variant="primary" size="sm">按钮</ui-button>
-                <ui-button variant="primary" size="sm">按钮</ui-button>
-                <ui-button variant="secondary" size="sm">按钮</ui-button>
-            </ui-button-group>
-            <ui-button-group>
-                <ui-button variant="primary" size="sm">按钮</ui-button>
-                <ui-button variant="primary" size="sm">按钮</ui-button>
-                <ui-button variant="secondary" size="sm">按钮</ui-button>
-            </ui-button-group>
-        </ui-button-toolbar>
+        <ui-container>
+            <ui-row>
+                <ui-column size="sm" columns="12">
+                    <ui-button-group size="lg">
+                        <ui-button variant="primary">按钮</ui-button>
+                        <ui-button variant="primary">按钮</ui-button>
+                        <ui-button variant="secondary">按钮</ui-button>
+                    </ui-button-group>
+                </ui-column>
+            </ui-row>
+            <ui-row>
+                <ui-button-toolbar>
+                    <ui-button-group direction="vertical">
+                        <ui-button variant="primary" size="sm">按钮</ui-button>
+                        <ui-button variant="primary" size="sm">按钮</ui-button>
+                        <ui-button variant="secondary" size="sm">按钮</ui-button>
+                    </ui-button-group>
+                    <ui-button-group>
+                        <ui-button variant="primary" size="sm">按钮</ui-button>
+                        <ui-button variant="primary" size="sm">按钮</ui-button>
+                        <ui-button variant="secondary" size="sm">按钮</ui-button>
+                    </ui-button-group>
+                </ui-button-toolbar>
+            </ui-row>
+        </ui-container>
         <script src="../node_modules/requirejs/require.js"></script>
         <script>
         require.config({
@@ -40,16 +48,36 @@
                 }
             ]
         });
-        require(['ButtonGroup/ButtonGroup', 'Button/Button', 'vcomponent', 'ButtonGroup/ButtonToolbar'], function (ButtonGroup, Button, VComponent, ButtonToolbar) {
+        require([
+            'ButtonGroup/ButtonGroup',
+            'Button/Button',
+            'vcomponent',
+            'ButtonGroup/ButtonToolbar',
+            'Grid/Container',
+            'Grid/Row',
+            'Grid/Column'
+        ], function (
+            ButtonGroup,
+            Button,
+            VComponent,
+            ButtonToolbar,
+            Container,
+            Row,
+            Column
+        ) {
             VComponent = VComponent.default;
             ButtonGroup = ButtonGroup.default;
             Button = Button.default;
             ButtonToolbar = ButtonToolbar.default;
+            Container = Container.default;
+            Row = Row.default;
+            Column = Column.default;
+            debugger
             var vcomponent = new VComponent({
                 startNode: document.body,
                 endNode: document.body
             });
-            vcomponent.registerComponents([ButtonGroup, Button, ButtonToolbar]);
+            vcomponent.registerComponents([ButtonGroup, Button, ButtonToolbar, Container, Row, Column]);
             vcomponent.render();
         });
         </script>
