@@ -5,19 +5,26 @@
 
 import Component from 'vcomponent/Component';
 import {uiPrefix} from '../variables';
-import {inArray} from '../util';
+import {inArray, distinctArr} from '../util';
 
 const CONVERT_PROPS = Symbol('convertProps');
 const SIZE_ARRAY = ['sm', 'lg'];
+const ON_OUTCLICK = Symbol('onOutclick');
 
 export default class ButtonGroup extends Component {
     getTemplate() {
         return `
-            <div class="$\{state.classList.join(' ')}">$\{props.children}</div>
+            <div class="$\{state.classList.concat(props.class).join(' ')}"
+                on-outclick="\${state.onOutclick(event)}">
+                $\{props.children}
+            </div>
         `;
     }
 
     ready() {
+        this.setState({
+            onOutclick: ::this[ON_OUTCLICK]
+        });
         this[CONVERT_PROPS]();
     }
 
@@ -33,6 +40,12 @@ export default class ButtonGroup extends Component {
         if (this.props.direction === 'vertical') {
             classList.push(`${uiPrefix}-button-group-vertical`);
         }
-        this.setState({classList});
+        this.setState({classList: distinctArr(classList)});
+    }
+
+    [ON_OUTCLICK](event) {
+        if (this.props.onoutclick instanceof Function) {
+            this.props.onoutclick(new Event(this, event, 'outclick'));
+        }
     }
 }

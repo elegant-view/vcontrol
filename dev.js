@@ -1,4 +1,5 @@
 var server = require('dev-server');
+var importOnce = require('node-sass-import-once');
 
 server.start({
     rootPath: __dirname,
@@ -12,6 +13,13 @@ server.start({
     },
     sass: {
         include: [/\/(test|src)\/.*\.scss$/],
-        compileOptions: {}
+        compileOptions: {
+            importer: importOnce,
+            importOnce: {
+                index: false,
+                css: false,
+                bower: false
+            }
+        }
     }
 });
