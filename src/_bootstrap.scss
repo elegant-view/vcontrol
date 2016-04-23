@@ -7,3 +7,7 @@ $border-radius: 0;
 
 @import "../node_modules/bootstrap/scss/mixins";
 @import "../node_modules/bootstrap/scss/reboot";
+
+a {
+    cursor: pointer;
+}

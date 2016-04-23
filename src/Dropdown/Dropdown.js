@@ -7,6 +7,7 @@ import Component from 'vcomponent/Component';
 import Button from '../Button/Button';
 import ButtonGroup from '../ButtonGroup/ButtonGroup';
 import {uiPrefix} from '../variables';
+import Event from '../Event';
 
 const CONVERT_PROPS = Symbol('convertProps');
 const ON_TOGGLE = Symbol('onToggle');
@@ -14,6 +15,7 @@ const ON_TOGGLE = Symbol('onToggle');
 const HIDE_LAYER = Symbol('hide');
 const SHOW_LAYER = Symbol('show');
 const ON_OUTCLICK = Symbol('onOutclick');
+const ON_ITEM_CLICK = Symbol('onItemClick');
 
 export default class Dropdown extends Component {
     getTemplate() {
@@ -43,8 +45,16 @@ export default class Dropdown extends Component {
                         <!-- for: props.items as item -->
                             <!-- if: item.type === 'divider' -->
                                 <div class="${uiPrefix}-dropdown-divider"></div>
+                            <!-- elif: item.href -->
+                                <a class="${uiPrefix}-dropdown-item"
+                                    href="\${item.href}">
+                                    \${item.label}
+                                </a>
                             <!-- else -->
-                                <a class="${uiPrefix}-dropdown-item" href="\${item.href}">\${item.label}</a>
+                                <a class="${uiPrefix}-dropdown-item"
+                                    on-click="\${state.onItemClick(item, event)}">
+                                    \${item.label}
+                                </a>
                             <!-- /if -->
                         <!-- /for -->
                     </div>
@@ -60,7 +70,8 @@ export default class Dropdown extends Component {
     ready() {
         this.setState({
             onToggle: ::this[ON_TOGGLE],
-            onOutclick: ::this[ON_OUTCLICK]
+            onOutclick: ::this[ON_OUTCLICK],
+            onItemClick: ::this[ON_ITEM_CLICK]
         });
         this[CONVERT_PROPS]();
     }
@@ -88,6 +99,18 @@ export default class Dropdown extends Component {
 
     [ON_OUTCLICK]() {
         this[HIDE_LAYER]();
+    }
+
+    [ON_ITEM_CLICK](item, event) {
+        if (item.onClick instanceof Function) {
+            const event = new Event(this, event, 'itemclick');
+            event.set('item', item);
+            item.onClick(event);
+
+            if (!event.isPreventDefault) {
+                this[HIDE_LAYER]();
+            }
+        }
     }
 
     [HIDE_LAYER]() {
