@@ -1,3 +1,5 @@
+@import "./variables";
+
 $border-radius-base: 0;
 $border-radius-lg: 0;
 $border-radius-sm: 0;
@@ -11,3 +13,93 @@ $border-radius: 0;
 a {
     cursor: pointer;
 }
+
+//
+// Floats
+//
+
+.#{$ui-prefix}-clearfix {
+  @include clearfix();
+}
+
+.#{$ui-prefix}-center-block {
+  @include center-block();
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    .pull-#{$breakpoint}-left {
+      @include pull-left();
+    }
+    .pull-#{$breakpoint}-right {
+      @include pull-right();
+    }
+    .pull-#{$breakpoint}-none {
+      float: none !important;
+    }
+  }
+}
+
+
+//
+// Screenreaders
+//
+
+.#{$ui-prefix}-sr-only {
+  @include sr-only();
+}
+
+.#{$ui-prefix}-sr-only-focusable {
+  @include sr-only-focusable();
+}
+
+.#{$ui-prefix}-invisible {
+  visibility: hidden !important;
+}
+
+.#{$ui-prefix}-text-hide {
+  @include text-hide();
+}
+
+
+.#{$ui-prefix}-text-justify        { text-align: justify !important; }
+.#{$ui-prefix}-text-nowrap         { white-space: nowrap !important; }
+.#{$ui-prefix}-text-truncate       { @include text-truncate; }
+
+// Responsive alignment
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    .#{$ui-prefix}-text-#{$breakpoint}-left   { text-align: left !important; }
+    .#{$ui-prefix}-text-#{$breakpoint}-right  { text-align: right !important; }
+    .#{$ui-prefix}-text-#{$breakpoint}-center { text-align: center !important; }
+  }
+}
+
+// Transformation
+
+.#{$ui-prefix}-text-lowercase      { text-transform: lowercase !important; }
+.#{$ui-prefix}-text-uppercase      { text-transform: uppercase !important; }
+.#{$ui-prefix}-text-capitalize     { text-transform: capitalize !important; }
+
+// Weight and italics
+
+.#{$ui-prefix}-font-weight-normal  { font-weight: normal; }
+.#{$ui-prefix}-font-weight-bold    { font-weight: bold; }
+.#{$ui-prefix}-font-italic         { font-style: italic; }
+
+// Contextual colors
+
+.#{$ui-prefix}-text-muted {
+  color: $text-muted;
+}
+
+@include text-emphasis-variant('.#{$ui-prefix}-text-primary', $brand-primary);
+
+@include text-emphasis-variant('.#{$ui-prefix}-text-success', $brand-success);
+
+@include text-emphasis-variant('.#{$ui-prefix}-text-info', $brand-info);
+
+@include text-emphasis-variant('.#{$ui-prefix}-text-warning', $brand-warning);
+
+@include text-emphasis-variant('.#{$ui-prefix}-text-danger', $brand-danger);

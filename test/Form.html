@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Form</title>
+        <link rel="stylesheet" href="./main.scss" media="screen" title="no title" charset="utf-8">
+    </head>
+    <body>
+        <ui-input type="email" placeholder="email"></ui-input>
+        <ui-input placeholder="password" type="password"></ui-input>
+        <ui-input type="file"></ui-input>
+        <ui-input type="radio"></ui-input>
+        <ui-input readonly placeholder="readonly"></ui-input>
+        <ui-input readonly placeholder="readonly" size="sm"></ui-input>
+        <ui-input size="lg"></ui-input>
+        <ui-input state="success"></ui-input>
+        <ui-select>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </ui-select>
+        <ui-select multiple>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </ui-select>
+        <ui-textarea></ui-textarea>
+
+        <ui-form>
+            <ui-formgroup label="field label">
+                <ui-input type="email" placeholder="email"></ui-input>
+            </ui-formgroup>
+        </ui-form>
+
+        <ui-form inline>
+            <ui-formgroup label="field label" tip="small tips">
+                <ui-inputgroup prefix="$" suffix=".00" size="sm" type="email" placeholder="email">
+                </ui-inputgroup>
+            </ui-formgroup>
+        </ui-form>
+
+        <ui-form inline>
+            <ui-formgroup>
+                <ui-input type="email" placeholder="email"></ui-input>
+            </ui-formgroup>
+        </ui-form>
+
+        <script src="../node_modules/requirejs/require.js"></script>
+        <script>
+        require.config({
+            baseUrl: '../src',
+            packages: [
+                {
+                    name: 'vcomponent',
+                    location: '../node_modules/vcomponent/src',
+                    main: 'main'
+                },
+                {
+                    name: 'vtpl',
+                    location: '../node_modules/vtpl/src',
+                    main: 'main'
+                }
+            ]
+        });
+        require([
+            'Form/Input',
+            'vcomponent',
+            'Form/Select',
+            'Form/Textarea',
+            'Form/Formgroup',
+            'Form/Form',
+            'Form/Inputgroup'
+        ], function (
+            Input,
+            VComponent,
+            Select,
+            Textarea,
+            Formgroup,
+            Form,
+            Inputgroup
+        ) {
+            VComponent = VComponent.default;
+            Input = Input.default;
+            Select = Select.default;
+            Textarea = Textarea.default;
+            Formgroup = Formgroup.default;
+            Form = Form.default;
+            Inputgroup = Inputgroup.default;
+
+            var vcomponent = new VComponent({
+                startNode: document.body,
+                endNode: document.body
+            });
+            vcomponent.registerComponents([Input, Select, Textarea, Formgroup, Form, Inputgroup]);
+            vcomponent.render();
+        });
+        </script>
+    </body>
+</html>
