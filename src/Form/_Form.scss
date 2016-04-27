@@ -1,6 +1,5 @@
 @import "../bootstrap";
 @import "../variables";
-@import "./Inputgroup";
 
 .#{$ui-prefix}-form-control {
   display: block;
@@ -140,7 +139,7 @@
 // Build on `.#{$ui-prefix}-form-control` with modifier classes to decrease or increase the
 // height and font-size of form controls.
 //
-// The `.form-group-* form-control` variations are sadly duplicated to avoid the
+// The `.#{$ui-prefix}-form-group-* form-control` variations are sadly duplicated to avoid the
 // issue documented in https://github.com/twbs/bootstrap/issues/15074.
 
 .#{$ui-prefix}-form-control-sm {
@@ -165,7 +164,7 @@
 // Designed to help with the organization and spacing of vertical forms. For
 // horizontal forms, use the predefined grid classes.
 
-.form-group {
+.#{$ui-prefix}-form-group {
   margin-bottom: $form-group-margin-bottom;
 }
 
@@ -269,7 +268,7 @@ input[type="checkbox"] {
 }
 
 // Form validation states
-.has-success {
+.#{$ui-prefix}-has-success {
   @include form-control-validation($brand-success);
 
   .#{$ui-prefix}-form-control-success {
@@ -277,7 +276,7 @@ input[type="checkbox"] {
   }
 }
 
-.has-warning {
+.#{$ui-prefix}-has-warning {
   @include form-control-validation($brand-warning);
 
   .#{$ui-prefix}-form-control-warning {
@@ -285,7 +284,7 @@ input[type="checkbox"] {
   }
 }
 
-.has-danger {
+.#{$ui-prefix}-has-danger {
   @include form-control-validation($brand-danger);
 
   .#{$ui-prefix}-form-control-danger {
@@ -312,7 +311,7 @@ input[type="checkbox"] {
 // }
 
 
-// .has-feedback {
+// .#{$ui-prefix}-has-feedback {
 //   // Enable absolute positioning
 //   position: relative;
 //
@@ -348,18 +347,18 @@ input[type="checkbox"] {
 // }
 //
 // // Form validation states
-// .has-success {
+// .#{$ui-prefix}-has-success {
 //   @include form-control-validation($state-success-text, $state-success-text, $state-success-bg);
 // }
-// .has-warning {
+// .#{$ui-prefix}-has-warning {
 //   @include form-control-validation($state-warning-text, $state-warning-text, $state-warning-bg);
 // }
-// .has-danger {
+// .#{$ui-prefix}-has-danger {
 //   @include form-control-validation($state-danger-text, $state-danger-text, $state-danger-bg);
 // }
 //
 // // Reposition feedback icon if input has visible label above
-// .has-feedback label {
+// .#{$ui-prefix}-has-feedback label {
 //
 //   ~ .#{$ui-prefix}-form-control-feedback {
 //     // TODO: redo this since we nuked the `$line-height-computed`
@@ -378,7 +377,7 @@ input[type="checkbox"] {
 // forms begin stacked on extra small (mobile) devices and then go inline when
 // viewports reach <768px.
 //
-// Requires wrapping inputs and labels with `.form-group` for proper display of
+// Requires wrapping inputs and labels with `.#{$ui-prefix}-form-group` for proper display of
 // default HTML form controls and our custom form controls (e.g., input groups).
 
 .#{$ui-prefix}-form-inline {
@@ -392,10 +391,10 @@ input[type="checkbox"] {
       vertical-align: middle;
     }
 
-    // Allow folks to *not* use `.form-group`
+    // Allow folks to *not* use `.#{$ui-prefix}-form-group`
     .#{$ui-prefix}-form-control {
       display: inline-block;
-      width: auto; // Prevent labels from stacking above inputs in `.form-group`
+      width: auto; // Prevent labels from stacking above inputs in `.#{$ui-prefix}-form-group`
       vertical-align: middle;
     }
 
@@ -445,7 +444,7 @@ input[type="checkbox"] {
     }
 
     // Re-override the feedback icon.
-    .has-feedback .#{$ui-prefix}-form-control-feedback {
+    .#{$ui-prefix}-has-feedback .#{$ui-prefix}-form-control-feedback {
       top: 0;
     }
   }
