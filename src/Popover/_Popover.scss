@@ -1,4 +1,7 @@
-.popover {
+@import "../bootstrap";
+@import "../variables";
+
+.#{$ui-prefix}-popover {
     position: absolute;
     top: 0;
     left: 0;
@@ -17,9 +20,9 @@
     @include box-shadow(0 5px 10px rgba(0,0,0,.2));
     // Popover directions
     &.bs-tether-element-attached-bottom,
-    &.popover-top {
+    &.#{$ui-prefix}-popover-top {
         margin-top: -$popover-arrow-width;
-        .popover-arrow {
+        .#{$ui-prefix}-popover-arrow {
             bottom: -$popover-arrow-outer-width;
             left: 50%;
             margin-left: -$popover-arrow-outer-width;
@@ -35,9 +38,9 @@
         }
     }
     &.bs-tether-element-attached-left,
-    &.popover-right {
+    &.#{$ui-prefix}-popover-right {
         margin-left: $popover-arrow-width;
-        .popover-arrow {
+        .#{$ui-prefix}-popover-arrow {
             top: 50%;
             left: -$popover-arrow-outer-width;
             margin-top: -$popover-arrow-outer-width;
@@ -53,9 +56,9 @@
         }
     }
     &.bs-tether-element-attached-top,
-    &.popover-bottom {
+    &.#{$ui-prefix}-popover-bottom {
         margin-top: $popover-arrow-width;
-        .popover-arrow {
+        .#{$ui-prefix}-popover-arrow {
             top: -$popover-arrow-outer-width;
             left: 50%;
             margin-left: -$popover-arrow-outer-width;
@@ -71,9 +74,9 @@
         }
     }
     &.bs-tether-element-attached-right,
-    &.popover-left {
+    &.#{$ui-prefix}-popover-left {
         margin-left: -$popover-arrow-width;
-        .popover-arrow {
+        .#{$ui-prefix}-popover-arrow {
             top: 50%;
             right: -$popover-arrow-outer-width;
             margin-top: -$popover-arrow-outer-width;
@@ -90,7 +93,7 @@
     }
 }
 // Offset the popover to account for the popover arrow
-.popover-title {
+.#{$ui-prefix}-popover-title {
     padding: 8px 14px;
     margin: 0; // reset heading margin
     font-size: $font-size-base;
@@ -98,13 +101,13 @@
     border-bottom: $popover-border-width solid darken($popover-title-bg, 5%);
     @include border-radius(($border-radius-lg - 1) ($border-radius-lg - 1) 0 0);
 }
-.popover-content {
+.#{$ui-prefix}-popover-content {
     padding: 9px 14px;
 }
 // Arrows
 //
 // .popover-arrow is outer, .popover-arrow::after is inner
-.popover-arrow {
+.#{$ui-prefix}-popover-arrow {
     &,
     &::after {
         position: absolute;
@@ -115,10 +118,10 @@
         border-style: solid;
     }
 }
-.popover-arrow {
+.#{$ui-prefix}-popover-arrow {
     border-width: $popover-arrow-outer-width;
 }
-.popover-arrow::after {
+.#{$ui-prefix}-popover-arrow::after {
     content: "";
     border-width: $popover-arrow-width;
 }

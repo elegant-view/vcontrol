@@ -8,12 +8,14 @@ import {uiPrefix} from '../variables';
 import {inArray} from '../util';
 
 const CONVERT_PROPS = Symbol('convertProps');
-const POSITION = ['top', 'right', 'bottom', 'left'];
+const POSITION = ['left', 'top', 'right', 'bottom'];
 
 export default class Popover extends Component {
     getTemplate() {
         return `
-            <div class="\${state.classList.concat(props.class).join(' ')}" ref="box">
+            <div class="\${state.classList.concat(props.class).join(' ')}"
+                style="\${state.style}"
+                ref="box">
                 <div class="popover-arrow"></div>
                 <h3 class="popover-title">\${props.title}</h3>
                 <div class="popover-content">
@@ -33,17 +35,15 @@ export default class Popover extends Component {
 
     [CONVERT_PROPS]() {
         const classList = this.state.classList || [`${uiPrefix}-popover`];
+        const style = this.state.style || {};
 
-        let positionComputer;
         if (inArray(this.props.position, POSITION)) {
             classList.push(`${uiPrefix}-popover-${this.props.position}`);
         }
-        else {
-            positionComputer = () => {
-                this.refs.box.getDOMNode();
-            };
-        }
 
-        this.setState({classList}, {done: positionComputer});
+        style.left = this.props.left;
+        style.top = this.props.top;
+
+        this.setState({classList, style});
     }
 }
