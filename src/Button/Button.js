@@ -7,6 +7,8 @@ import Component from 'vcomponent/Component';
 import {uiPrefix} from '../variables';
 import {inArray, distinctArr} from '../util';
 import Event from '../Event';
+import {propsType} from '../decorators';
+import {PropTypes} from '../type';
 
 const CONVERT_PROPS = Symbol('convertProps');
 
@@ -16,11 +18,15 @@ const OUTLINE_ARRAY = TYPE_ARRAY;
 
 const ON_CLICK = Symbol('onClick');
 
+@propsType({
+    variant: PropTypes.string.isRequired
+})
 export default class Button extends Component {
     getTemplate() {
         return `
-            <button class="$\{state.classList.concat(props.class).join(' ')}" on-click="state.onClick(event)">
-                $\{props.children}
+            <button class="\${state.classList.concat(props.class).join(' ')}"
+                on-click="state.onClick(event)">
+                \${props.children}
             </button>
         `;
     }

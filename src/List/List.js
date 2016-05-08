@@ -20,7 +20,8 @@ export default class List extends Component {
                             item.variant ? ('${uiPrefix}-list-group-item-' + item.variant) : '',
                         ] -->
 
-                        <a href="\${item.link}"
+                        <a href="\${item.link ? item.link : 'javascript:;'}"
+                            on-click="\${item.onClick(item)}"
                             class="\${linkClassList}">
                             <!-- if: item.type === 'abstract' -->
                                 <h4 class="${uiPrefix}-list-group-item-heading">\${item.title}</h4>
@@ -43,7 +44,8 @@ export default class List extends Component {
                         ] -->
 
                         <!-- if: item.type === 'label' -->
-                            <li class="\${linkClassList}">
+                            <li class="\${linkClassList}"
+                                on-click="\${item.onClick(item)}">
                                 <span class="label label-default label-pill pull-xs-right">
                                     \${item.count}
                                 </span>

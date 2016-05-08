@@ -34,14 +34,25 @@
             vcomponent.registerComponents([List]);
             vcomponent.render();
 
+            var list = [
+                {
+                    label: '123',
+                    onClick: function (item) {
+                        item.active = !item.active;
+                        vcomponent.setData({list: list});
+                    }
+                },
+                {
+                    label: '456',
+                    onClick: function (item) {
+                        item.active = !item.active;
+                        vcomponent.setData({list: list});
+                    }
+                }
+            ];
             vcomponent.setData({
                 type: 'link',
-                list: [
-                    {
-                        label: '123',
-                        link: 'https://www.baidu.com'
-                    }
-                ]
+                list: list
             });
         });
         </script>
