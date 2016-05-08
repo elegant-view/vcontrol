@@ -5,21 +5,22 @@
 
 import Component from 'vcomponent/Component';
 import {uiPrefix} from '../variables';
-import {inArray, distinctArr} from '../util';
+import {distinctArr} from '../util';
 import Event from '../Event';
-import {propsType} from '../decorators';
-import {PropTypes} from '../type';
+import {propsType} from 'vcomponent/decorators';
+import {PropTypes} from 'vcomponent/type';
+import {SIZE_ARRAY, VARIANT_ARRAY} from '../variables';
 
 const CONVERT_PROPS = Symbol('convertProps');
-
-const SIZE_ARRAY = ['sm', 'lg'];
-const TYPE_ARRAY = ['primary', 'secondary', 'info', 'success', 'warning', 'danger'];
-const OUTLINE_ARRAY = TYPE_ARRAY;
+const OUTLINE_ARRAY = VARIANT_ARRAY;
 
 const ON_CLICK = Symbol('onClick');
 
 @propsType({
-    variant: PropTypes.string.isRequired
+    variant: PropTypes.oneOf(VARIANT_ARRAY),
+    size: PropTypes.oneOf(SIZE_ARRAY),
+    outline: PropTypes.oneOf(OUTLINE_ARRAY),
+    onClick: PropTypes.func
 })
 export default class Button extends Component {
     getTemplate() {
@@ -44,20 +45,20 @@ export default class Button extends Component {
 
     [CONVERT_PROPS]() {
         const classList = this.state.classList || [`${uiPrefix}-button`];
-        if (inArray(this.props.variant, TYPE_ARRAY)) {
+        if (this.props.variant) {
             classList.push(`${uiPrefix}-button-${this.props.variant}`);
         }
-        if (inArray(this.props.size, SIZE_ARRAY)) {
+        if (this.props.size) {
             classList.push(`${uiPrefix}-button-${this.props.size}`);
         }
-        if (inArray(this.props.outline, OUTLINE_ARRAY)) {
+        if (this.props.outline) {
             classList.push(`${uiPrefix}-${this.props.outline}-outline`);
         }
         this.setState({classList: distinctArr(classList)});
     }
 
     [ON_CLICK](event) {
-        if (this.props.onclick instanceof Function) {
+        if (this.props.onclick) {
             this.props.onclick(new Event(this, event, 'click'));
         }
     }

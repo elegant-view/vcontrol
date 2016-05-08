@@ -6,8 +6,10 @@
 import Component from 'vcomponent/Component';
 import Button from '../Button/Button';
 import ButtonGroup from '../ButtonGroup/ButtonGroup';
-import {uiPrefix} from '../variables';
+import {uiPrefix, SIZE_ARRAY, VARIANT_ARRAY} from '../variables';
 import Event from '../Event';
+import {propsType} from 'vcomponent/decorators';
+import {PropTypes} from 'vcomponent/type';
 
 const CONVERT_PROPS = Symbol('convertProps');
 const ON_TOGGLE = Symbol('onToggle');
@@ -17,6 +19,13 @@ const SHOW_LAYER = Symbol('show');
 const ON_OUTCLICK = Symbol('onOutclick');
 const ON_ITEM_CLICK = Symbol('onItemClick');
 
+@propsType({
+    direction: PropTypes.oneOf(['up', 'down']),
+    size: PropTypes.oneOf(SIZE_ARRAY),
+    variant: PropTypes.oneOf(VARIANT_ARRAY),
+    title: PropTypes.string,
+    items: PropTypes.arrayOf(PropTypes.object).required
+})
 export default class Dropdown extends Component {
     getTemplate() {
         return `
@@ -82,7 +91,9 @@ export default class Dropdown extends Component {
 
     [CONVERT_PROPS]() {
         const classList = this.state.classList || [];
-        classList.push(this.props.direction === 'up' ? `${uiPrefix}-dropup` : `${uiPrefix}-dropdown`);
+        if (this.props.direction) {
+            classList.push(`${uiPrefix}-drop${this.props.direction}`);
+        }
         this.setState({classList});
     }
 

@@ -4,13 +4,20 @@
  */
 
 import Component from 'vcomponent/Component';
-import {uiPrefix} from '../variables';
+import {uiPrefix, SIZE_ARRAY} from '../variables';
 import {inArray, distinctArr} from '../util';
+import {propsType} from 'vcomponent/decorators';
+import {PropTypes} from 'vcomponent/type';
 
 const CONVERT_PROPS = Symbol('convertProps');
 const SIZE_ARRAY = ['sm', 'lg'];
 const ON_OUTCLICK = Symbol('onOutclick');
 
+@propsType({
+    size: PropTypes.oneOf(SIZE_ARRAY),
+    direction: PropTypes.oneOf(['vertical']),
+    onOutclick: PropTypes.func
+})
 export default class ButtonGroup extends Component {
     getTemplate() {
         return `
@@ -34,7 +41,7 @@ export default class ButtonGroup extends Component {
 
     [CONVERT_PROPS]() {
         const classList = this.state.classList || [`${uiPrefix}-button-group`];
-        if (inArray(this.props.size, SIZE_ARRAY)) {
+        if (this.props.size) {
             classList.push(`${uiPrefix}-button-group-${this.props.size}`);
         }
         if (this.props.direction === 'vertical') {
@@ -44,8 +51,8 @@ export default class ButtonGroup extends Component {
     }
 
     [ON_OUTCLICK](event) {
-        if (this.props.onoutclick instanceof Function) {
-            this.props.onoutclick(new Event(this, event, 'outclick'));
+        if (this.props.onoutclick) {
+            this.props.onOutclick(new Event(this, event, 'outclick'));
         }
     }
 }

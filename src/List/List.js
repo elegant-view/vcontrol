@@ -5,7 +5,13 @@
 
 import Component from 'vcomponent/Component';
 import {uiPrefix} from '../variables';
+import {propsType} from 'vcomponent/decorators';
+import {PropTypes} from 'vcomponent/type';
 
+@propsType({
+    type: PropTypes.oneOf(['link']),
+    list: PropTypes.arrayOf(PropTypes.object)
+})
 export default class List extends Component {
     getTemplate() {
         return `
