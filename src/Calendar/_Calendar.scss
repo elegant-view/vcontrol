@@ -1,0 +1,35 @@
+@import "../bootstrap";
+@import "../variables";
+
+.#{$ui-prefix}-calendar {
+    width: 20em;
+
+    .week,
+    .day {
+        @include make-row(-2em);
+        @include clearfix();
+        span {
+            float: left;
+            text-align: center;
+            @include make-col-span(1, 7);
+        }
+    }
+
+    .day {
+        span {
+            cursor: pointer;
+            transition: all .1s linear;
+            border: 1px solid transparent;
+            box-sizing: border-box;
+
+            &.disabled {
+                cursor: default;
+                color: #999;
+            }
+
+            &.enable:hover {
+                border-color: #999;
+            }
+        }
+    }
+}

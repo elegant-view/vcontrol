@@ -2,16 +2,16 @@
 <html>
 <head>
     <title>Calendar</title>
-    <link rel="stylesheet" type="text/css" href="../src/main.scss">
+    <link rel="stylesheet" type="text/css" href="./main.scss">
 </head>
 <body>
 <div id="main">
-    <ui-calendar></ui-calendar>
+    <ev-calendar date="${date}"></ev-calendar>
 </div>
 <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
 <script type="text/javascript">
     require.config({
-        "baseUrl": "/src",
+        "baseUrl": "../src",
         "paths": {},
         "packages": [
             {
@@ -21,17 +21,13 @@
             },
             {
                 "name": "vcomponent",
-                "location": "../node_modules/vcomponent",
-                "main": "src/main"
+                "location": "../node_modules/vcomponent/src",
+                "main": "main"
             },
             {
                 "name": "vtpl",
-                "location": "../node_modules/vtpl",
-                "main": "src/main"
-            },
-            {
-                "name": "vcontrol",
-                "location": ".."
+                "location": "../node_modules/vtpl/src",
+                "main": "main"
             },
             {
                 "name": "underscore",
@@ -41,13 +37,18 @@
         ]
     });
 </script>
-<script type="text/javascript">
-    require(["vcomponent", "vcontrol/src/Calendar"], function (vc, Calendar) {
-        var vcomponent = new vc.VComponent({
+<script>
+    require(["vcomponent", "Calendar/Calendar"], function (VComponent, Calendar) {
+        VComponent = VComponent.default;
+        Calendar = Calendar.default;
+        var vcomponent = new VComponent({
             startNode: document.getElementById('main'),
             endNode: document.getElementById('main')
         });
         vcomponent.registerComponents([Calendar]);
+        vcomponent.setData({
+            date: new Date()
+        });
         vcomponent.render();
     });
 </script>

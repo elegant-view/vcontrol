@@ -18,23 +18,23 @@ export default class Inputgroup extends Component {
             <div class="\${state.classList.concat(props.class).join(' ')}">
                 <!-- if: props.prefixType === 'checkbox' -->
                     <span class="${uiPrefix}-input-group-addon">
-                        <ui-input type="checkbox" />
+                        <ev-input type="checkbox" />
                     </span>
                 <!-- elif: props.prefixType === 'radio' -->
                     <span class="${uiPrefix}-input-group-addon">
-                        <ui-input type="radio" />
+                        <ev-input type="radio" />
                     </span>
                 <!-- elif: props.prefixType === 'button' -->
                     <span class="${uiPrefix}-input-group-btn">
-                        <ui-button variant="secondary">\${props.prefix}</ui-button>
+                        <ev-button variant="secondary">\${props.prefix}</ui-button>
                     </span>
                 <!-- elif: props.prefix -->
                     <div class="${uiPrefix}-input-group-addon">\${props.prefix}</div>
                 <!-- /if -->
-                <ui-input d-rest="\${props}"></ui-input>
+                <ev-input d-rest="\${props}"></ui-input>
                 <!-- if: props.suffixType === 'button' -->
                     <span class="${uiPrefix}-input-group-btn">
-                        <ui-button variant="secondary">\${props.suffix}</ui-button>
+                        <ev-button variant="secondary">\${props.suffix}</ui-button>
                     </span>
                 <!-- elif: props.suffix -->
                     <div class="${uiPrefix}-input-group-addon">\${props.suffix}</div>

@@ -5,12 +5,11 @@
 
 import Component from 'vcomponent/Component';
 import {uiPrefix, SIZE_ARRAY} from '../variables';
-import {inArray, distinctArr} from '../util';
+import {distinctArr} from '../util';
 import {propsType} from 'vcomponent/decorators';
 import {PropTypes} from 'vcomponent/type';
 
 const CONVERT_PROPS = Symbol('convertProps');
-const SIZE_ARRAY = ['sm', 'lg'];
 const ON_OUTCLICK = Symbol('onOutclick');
 
 @propsType({
@@ -52,7 +51,7 @@ export default class ButtonGroup extends Component {
 
     [ON_OUTCLICK](event) {
         if (this.props.onoutclick) {
-            this.props.onOutclick(new Event(this, event, 'outclick'));
+            this.props.onoutclick(new Event(this, event, 'outclick'));
         }
     }
 }

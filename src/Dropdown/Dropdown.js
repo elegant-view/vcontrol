@@ -24,29 +24,29 @@ const ON_ITEM_CLICK = Symbol('onItemClick');
     size: PropTypes.oneOf(SIZE_ARRAY),
     variant: PropTypes.oneOf(VARIANT_ARRAY),
     title: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.object).required
+    items: PropTypes.arrayOf(PropTypes.object)
 })
 export default class Dropdown extends Component {
     getTemplate() {
         return `
-            <ui-button-group class="\${state.classList}" onoutclick="\${state.onOutclick}">
+            <ev-button-group class="\${state.classList}" onoutclick="\${state.onOutclick}">
                 <!-- if: props.split -->
-                    <ui-button size="\${props.size}"
+                    <ev-button size="\${props.size}"
                         variant="\${props.variant}">
                         \${props.title}
-                    </ui-button>
-                    <ui-button size="\${props.size}"
+                    </ev-button>
+                    <ev-button size="\${props.size}"
                         variant="\${props.variant}"
                         class="${uiPrefix}-dropdown-toggle"
                         onclick="\${state.onToggle}">
-                    </ui-button>
+                    </ev-button>
                 <!-- else -->
-                    <ui-button variant="\${props.variant}"
+                    <ev-button variant="\${props.variant}"
                         size="\${props.size}"
                         class="${uiPrefix}-dropdown-toggle"
                         onclick="\${state.onToggle}">
                         $\{props.title}
-                    </ui-button>
+                    </ev-button>
                 <!-- /if -->
 
                 <!-- if: props.items && props.items.length -->
@@ -68,7 +68,7 @@ export default class Dropdown extends Component {
                         <!-- /for -->
                     </div>
                 <!-- /if -->
-            </ui-button-group>
+            </ev-button-group>
         `;
     }
 
