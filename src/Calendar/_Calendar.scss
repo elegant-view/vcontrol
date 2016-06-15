@@ -25,11 +25,34 @@
             &.disabled {
                 cursor: default;
                 color: #999;
+
+                &.selected {
+                    background: rgba(49, 176, 213, .5);
+                }
             }
 
             &.enable:hover {
                 border-color: #999;
             }
         }
+
+        .selected {
+            background: #31b0d5;
+        }
+    }
+
+    .#{$ui-prefix}-form-control {
+        display: inline-block;
+    }
+
+    .select {
+        width: 4em;
+        -webkit-appearance: none;
+        padding: 0 .5em;
+        cursor: pointer;
+    }
+
+    .center {
+        text-align: center;
     }
 }

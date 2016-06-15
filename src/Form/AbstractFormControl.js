@@ -6,13 +6,12 @@
 import Component from 'vcomponent/Component';
 import {uiPrefix} from '../variables';
 import {inArray} from '../util';
+import {SIZE_ARRAY, CONVERT_PROPS} from '../variables';
 
-const SIZE_ARRAY = ['lg', 'sm'];
 const STATE_ARRAY = ['success', 'warning', 'danger'];
 
 export default class AbstractFormControl extends Component {
-
-    convertProps() {
+    [CONVERT_PROPS]() {
         const classList = this.state.classList || [];
         if (this.props.type === 'file') {
             classList.push(`${uiPrefix}-form-control-file`);

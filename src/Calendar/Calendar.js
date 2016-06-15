@@ -1,17 +1,21 @@
 /**
  * @file Calendar
  * @author yibuyisheng(yibuyisheng@163.com)
+ * @flow
  */
 
 import Component from 'vcomponent/Component';
-import u from 'underscore';
 import Dropdown from '../Dropdown/Dropdown';
+import Select from '../Form/Select';
 import {uiPrefix} from '../variables';
 import {propsType} from 'vcomponent/decorators';
 import {PropTypes} from 'vcomponent/type';
+import u from 'underscore';
 
 const GET_DAYS = Symbol('getDays');
 const CONVERT_PROPS = Symbol('convertProps');
+const ON_YEAR_CHANGE = Symbol('onYearChange');
+const ON_MONTH_CHANGE = Symbol('onMonthChange');
 
 @propsType({
     date: PropTypes.date.required
@@ -21,22 +25,17 @@ export default class Calendar extends Component {
         return `
             <div class="${uiPrefix}-calendar">
                 <div class="head">
-                    <div class="left">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </div>
                     <div class="center">
-                            <ev-dropdown items="\${state.years}"
-                                on-item-selected="\${state.onYearChange}">
-                            </ev-dropdown>
-                            年
-                            <!-- <ev-dropdown items="\${state.months}"
-                                type="default"
-                                on-item-selected="\${state.onMonthChange}">
-                            </ev-dropdown>
-                            月 -->
-                    </div>
-                    <div class="right">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <ev-select class="${uiPrefix}-form-control"
+                            value="\${state.selectedYear}"
+                            items="\${state.years}"
+                            onchange="\${onYearChange}">
+                        </ev-select>年
+                        <ev-select class="${uiPrefix}-form-control"
+                            value="\${state.selectedMonth}"
+                            items="\${state.months}"
+                            onchange="\${onMonthChange}">
+                        </ev-select>月
                     </div>
                 </div>
                 <div class="week">
@@ -50,10 +49,18 @@ export default class Calendar extends Component {
                 </div>
                 <div class="day">
                     <!-- for: state.days as day -->
+                        <!-- var: isSelectedDate = state.selectedYear === day.date.getFullYear()
+                            && state.selectedMonth === day.date.getMonth() + 1
+                            && state.selectedDay === day.date.getDate()
+                        -->
                         <!-- if: day.disabled -->
-                            <span class="disabled">\${day.date.getDate()}</span>
+                            <span class="disabled \${isSelectedDate?'selected':''}">
+                                \${day.date.getDate()}
+                            </span>
                         <!-- else -->
-                            <span class="enable">\${day.date.getDate()}</span>
+                            <span class="enable \${isSelectedDate?'selected':''}">
+                                \${day.date.getDate()}
+                            </span>
                         <!-- /if -->
                     <!-- /for -->
                 </div>
@@ -61,13 +68,16 @@ export default class Calendar extends Component {
         `;
     }
 
-    constructor() {
-        super();
-        this.state.years = [];
-    }
-
     ready() {
         this[CONVERT_PROPS]();
+
+        this.setState({
+            selectedYear: this.state.years[1].label,
+            selectedMonth: 6,
+            selectedDay: 1,
+            onYearChange: ::this[ON_YEAR_CHANGE],
+            onMonthChange: ::this[ON_MONTH_CHANGE]
+        });
     }
 
     propsChange() {
@@ -87,9 +97,11 @@ export default class Calendar extends Component {
                 label: date.getFullYear() + 1
             }
         ];
+        const months = u.map(u.range(12), num => ({label: num + 1}));
         this.setState({
             days: this[GET_DAYS](date),
-            years
+            years,
+            months
         });
     }
 
@@ -140,7 +152,19 @@ export default class Calendar extends Component {
         }
     }
 
+    [ON_YEAR_CHANGE](event) {
+        this.setState({
+            selectedYear: event.get('item').label
+        });
+    }
+
+    [ON_MONTH_CHANGE](event) {
+        this.setState({
+            selectedMonth: event.get('item').label
+        });
+    }
+
     getComponentClasses() {
-        return [Dropdown];
+        return [Dropdown, Select];
     }
 }

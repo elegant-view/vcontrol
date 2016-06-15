@@ -10,6 +10,7 @@ import {uiPrefix, SIZE_ARRAY, VARIANT_ARRAY} from '../variables';
 import Event from '../Event';
 import {propsType} from 'vcomponent/decorators';
 import {PropTypes} from 'vcomponent/type';
+import {isFunction} from '../util';
 
 const CONVERT_PROPS = Symbol('convertProps');
 const ON_TOGGLE = Symbol('onToggle');
@@ -24,7 +25,8 @@ const ON_ITEM_CLICK = Symbol('onItemClick');
     size: PropTypes.oneOf(SIZE_ARRAY),
     variant: PropTypes.oneOf(VARIANT_ARRAY),
     title: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.object)
+    items: PropTypes.arrayOf(PropTypes.object),
+    onSelect: PropTypes.func
 })
 export default class Dropdown extends Component {
     getTemplate() {
@@ -113,14 +115,13 @@ export default class Dropdown extends Component {
     }
 
     [ON_ITEM_CLICK](item, event) {
-        if (item.onClick instanceof Function) {
-            const event = new Event(this, event, 'itemclick');
-            event.set('item', item);
-            item.onClick(event);
+        const wrapEvent = new Event(this, event, 'itemclick');
+        wrapEvent.set('item', item);
+        isFunction(item.onClick) && item.onClick(wrapEvent);
+        this.props.onSelect && this.props.onSelect(wrapEvent);
 
-            if (!event.isPreventDefault) {
-                this[HIDE_LAYER]();
-            }
+        if (!wrapEvent.isPreventDefault) {
+            this[HIDE_LAYER]();
         }
     }
 

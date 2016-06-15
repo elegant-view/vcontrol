@@ -6,7 +6,7 @@
 import Component from 'vcomponent/Component';
 import {uiPrefix} from '../variables';
 import {inArray} from '../util';
-import Input from './Input';
+import Input from '../Form/Input';
 import Button from '../Button/Button';
 
 const CONVERT_PROPS = Symbol('convertProps');

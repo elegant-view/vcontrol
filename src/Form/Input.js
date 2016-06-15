@@ -4,6 +4,7 @@
  */
 
 import AbstractFormControl from './AbstractFormControl';
+import {CONVERT_PROPS} from '../variables';
 
 export default class Input extends AbstractFormControl {
     getTemplate() {
@@ -13,10 +14,10 @@ export default class Input extends AbstractFormControl {
     }
 
     ready() {
-        this.convertProps();
+        this[CONVERT_PROPS]();
     }
 
     propsChange() {
-        this.convertProps();
+        this[CONVERT_PROPS]();
     }
 }

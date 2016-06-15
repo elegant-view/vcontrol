@@ -4,6 +4,7 @@
  */
 
 import AbstractFormControl from './AbstractFormControl';
+import {CONVERT_PROPS} from '../variables';
 
 export default class Textarea extends AbstractFormControl {
     getTemplate() {
@@ -14,10 +15,10 @@ export default class Textarea extends AbstractFormControl {
     }
 
     ready() {
-        this.convertProps();
+        this[CONVERT_PROPS]();
     }
 
     propsChange() {
-        this.convertProps();
+        this[CONVERT_PROPS]();
     }
 }
