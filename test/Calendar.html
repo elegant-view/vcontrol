@@ -6,7 +6,7 @@
 </head>
 <body>
 <div id="main">
-    <ev-calendar date="${date}"></ev-calendar>
+    <ev-calendar date="${date}" on-select="${onSelect}" years="${years}"></ev-calendar>
 </div>
 <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
 <script type="text/javascript">
@@ -47,7 +47,11 @@
         });
         vcomponent.registerComponents([Calendar]);
         vcomponent.setData({
-            date: new Date()
+            date: new Date(2011, 9, 1),
+            years: [2011, 2012],
+            onSelect(event) {
+                console.log(event.get('value'));
+            }
         });
         vcomponent.render();
     });

@@ -20,11 +20,11 @@ export default class Select extends AbstractFormControl {
     getTemplate() {
         return `
             <select class="\${state.classList.concat(props.class).join(' ')}"
-                on-change="\${state.onChange(event, item)}"
+                on-change="\${state.onChange(event)}"
                 ref="ctrl">
                 <!-- if: props.items && props.items.length -->
                     <!-- for: props.items as item -->
-                        <option value="\${item.label}">\${item.label}</option>
+                        <option value="\${item.value}">\${item.label}</option>
                     <!-- /for -->
                 <!-- else -->
                     \${props.children}
@@ -33,27 +33,38 @@ export default class Select extends AbstractFormControl {
         `;
     }
 
-    ready() {
+    init() {
         this[CONVERT_PROPS]();
 
         this.setState({
             onChange: ::this[ON_CHANGE]
         });
+
+        this.refs.ctrl.setValue(this.props.value);
     }
 
-    propsChange() {
+    propsChange(changedProps) {
         this[CONVERT_PROPS]();
+    }
+
+    propsChangeMounted(changedProps) {
+        if (changedProps.items || 'value' in changedProps) {
+            this.refs.ctrl.setValue(this.props.value);
+        }
     }
 
     [CONVERT_PROPS]() {
         super[CONVERT_PROPS]();
-        this.refs.ctrl.setValue(this.props.value);
     }
 
-    [ON_CHANGE](event, item) {
+    [ON_CHANGE](event) {
         if (this.props.onchange) {
-            event.set('item', item);
-            this.props.onchange(new Event(event, 'change'));
+            const wrapEvent = new Event(this, event, 'change');
+            this.props.onchange(wrapEvent);
         }
+    }
+
+    getValue() {
+        return this.refs.ctrl.getValue();
     }
 }
