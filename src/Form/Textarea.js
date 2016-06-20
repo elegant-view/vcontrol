@@ -14,7 +14,7 @@ export default class Textarea extends AbstractFormControl {
         `;
     }
 
-    ready() {
+    init() {
         this[CONVERT_PROPS]();
     }
 

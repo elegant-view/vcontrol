@@ -32,7 +32,7 @@ export default class Button extends Component {
         `;
     }
 
-    ready() {
+    init() {
         this.setState({
             onClick: ::this[ON_CLICK]
         });

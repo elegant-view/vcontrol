@@ -78,7 +78,7 @@ export default class Dropdown extends Component {
         return [Button, ButtonGroup];
     }
 
-    ready() {
+    init() {
         this.setState({
             onToggle: ::this[ON_TOGGLE],
             onOutclick: ::this[ON_OUTCLICK],

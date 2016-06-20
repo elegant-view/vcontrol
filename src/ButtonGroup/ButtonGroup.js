@@ -27,7 +27,7 @@ export default class ButtonGroup extends Component {
         `;
     }
 
-    ready() {
+    init() {
         this.setState({
             onOutclick: ::this[ON_OUTCLICK]
         });

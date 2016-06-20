@@ -15,7 +15,7 @@ export default class Container extends Component {
         `;
     }
 
-    ready() {
+    init() {
         this[CONVERT_PROPS]();
     }
 

@@ -13,7 +13,7 @@ export default class Input extends AbstractFormControl {
         `;
     }
 
-    ready() {
+    init() {
         this[CONVERT_PROPS]();
     }
 

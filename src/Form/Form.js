@@ -15,7 +15,7 @@ export default class Form extends Component {
         `;
     }
 
-    ready() {
+    init() {
         this[CONVERT_PROPS]();
     }
 

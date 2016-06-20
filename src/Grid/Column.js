@@ -16,7 +16,7 @@ export default class Column extends Component {
         `;
     }
 
-    ready() {
+    init() {
         this[CONVERT_PROPS]();
     }
 
