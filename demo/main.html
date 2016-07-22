@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="./main.scss" media="screen" title="no title" charset="utf-8">
+</head>
+
+<body>
+
+    <div id="main"><!-- route --></div>
+
+    <script src="../node_modules/requirejs/require.js"></script>
+    <script>
+        require.config({
+            "baseUrl": "./",
+            "paths": {},
+            "packages": [
+                {
+                    "name": "vcontrol",
+                    "location": "../src"
+                },
+                {
+                    "name": "vcomponent",
+                    "location": "../node_modules/vcomponent/src",
+                    "main": "main"
+                },
+                {
+                    "name": "vtpl",
+                    "location": "../node_modules/vtpl/src",
+                    "main": "main"
+                },
+                {
+                    "name": "underscore",
+                    "location": "../node_modules/underscore",
+                    "main": "underscore"
+                },
+                {
+                    "name": 'protectobject',
+                    "location": '../node_modules/ProtectObject/src'
+                },
+                {
+                    "name": 'event',
+                    "location": '../node_modules/event/src'
+                },
+                {
+                    "name": "state",
+                    "location": "../node_modules/state/src"
+                },
+                {
+                    "name": "vrouter",
+                    "location": "../node_modules/vrouter/src"
+                }
+            ]
+        });
+
+        require(['./main']);
+    </script>
+</body>
+
+</html>

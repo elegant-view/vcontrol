@@ -5,14 +5,14 @@ server.start({
     rootPath: __dirname,
     port: 8001,
     babel: {
-        include: [/\/(test|src)\/.*\.js$/],
+        include: [/\/(test|src|demo)\/.*\.js$/],
         compileOptions: {
             presets: ['es2015', 'stage-0'],
             plugins: ['transform-es2015-modules-amd', 'transform-decorators-legacy']
         }
     },
     sass: {
-        include: [/\/(test|src)\/.*\.scss$/],
+        include: [/\/(test|src|demo)\/.*\.scss$/],
         compileOptions: {
             importer: importOnce,
             importOnce: {

@@ -1,0 +1,25 @@
+@import "../src/Button/Button";
+@import "../src/ButtonGroup/ButtonGroup";
+@import "../src/Grid/Grid";
+@import "../src/Dropdown/Dropdown";
+@import "../src/Form/Form";
+@import "../src/Inputgroup/Inputgroup";
+@import "../src/List/List";
+@import "../src/Calendar/Calendar";
+
+@import "../src/theme/default/main";
+
+.main {
+    @include make-row(0);
+
+    .nav {
+        @include make-col();
+        @include make-col-span(2);
+        border-right: 1px solid #e2e1e1;
+    }
+
+    .content {
+        @include make-col();
+        @include make-col-span(10);
+    }
+}

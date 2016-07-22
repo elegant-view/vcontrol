@@ -80,11 +80,12 @@ export default class Calendar extends Component {
     init() {
         // 每个月显示的“天”数据都会是固定的，所以可以缓存起来，不用每次计算
         this[DAYS_CACHE] = {};
+        this.defaultDate = new Date();
 
         this[CONVERT_PROPS]();
         this[CONVERT_YEARS]();
 
-        const date = this.props.date || new Date();
+        const date = this.props.date || this.defaultDate;
         this.setState({
             selectedYear: date.getFullYear(),
             selectedMonth: date.getMonth() + 1,
@@ -101,10 +102,20 @@ export default class Calendar extends Component {
         if ('years' in changedProps) {
             this[CONVERT_YEARS]();
         }
+
+        // date发生了变化就要重新设置一下选择的年月日
+        if ('date' in changedProps) {
+            const date = this.props.date || this.defaultDate;
+            this.setState({
+                selectedYear: date.getFullYear(),
+                selectedMonth: date.getMonth() + 1,
+                selectedDay: date.getDate()
+            });
+        }
     }
 
     [CONVERT_PROPS]() {
-        const date = this.props.date;
+        const date = this.props.date || this.defaultDate;
         const months = u.map(u.range(12), num => ({
             label: num + 1,
             value: num + 1
@@ -131,7 +142,10 @@ export default class Calendar extends Component {
             const curYear = (new Date()).getFullYear();
             years = u.range(curYear - 5, curYear + 5, 1);
         }
-        this.setState({years: years.map(year => ({value: year, label: year}))});
+
+        this.setState({
+            years: years.map(year => ({value: year, label: year}))
+        });
     }
 
     /**
@@ -208,6 +222,7 @@ export default class Calendar extends Component {
     [ON_MONTH_CHANGE](event) {
         const selectedMonth = parseInt(this.refs.monthCtrl.getValue(), 10);
         const date = new Date(this.refs.yearCtrl.getValue(), selectedMonth, 0);
+
         this.setState({
             days: this[GET_DAYS](date),
             selectedMonth,
