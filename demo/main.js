@@ -18,6 +18,7 @@ class Main extends Component {
             <div class="main">
                 <div class="nav">
                     <div class="item"><a href="#/main">首页</a></div>
+                    <div class="item"><a href="#/main/CalendarPage">Calendar</a></div>
                     <div class="item"><a href="#/main/SelectPage">Select</a></div>
                 </div>
                 <div class="content"><!-- route --></div>

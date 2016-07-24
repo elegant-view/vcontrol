@@ -9,7 +9,7 @@ import Calendar from 'vcontrol/Calendar/Calendar';
 export default class CalendarPage extends Component {
     getTemplate() {
         return `
-            <ev-calendar date="\${state.date}" on-select="\${state.onSelect}" years="\${state.years}"></ev-calendar>
+            <ev-calendar date="{state.date}" on-select="{state.onSelect}" years="{state.years}"></ev-calendar>
         `;
     }
 

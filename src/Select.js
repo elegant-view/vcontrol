@@ -20,7 +20,8 @@ import Event from './Event';
     datasource: PropTypes.arrayOf(PropTypes.shape({text: PropTypes.string, value: PropTypes.any})),
     defaultText: PropTypes.string,
     size: PropTypes.oneOf(['large', 'normal', 'small']),
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    value: PropTypes.any
 })
 export default class Select extends Component {
 
@@ -68,6 +69,15 @@ export default class Select extends Component {
         });
 
         this.convertWidth();
+
+        u.find(this.props.datasource, item => {
+            if (item.value === this.props.value) {
+                this.setState({
+                    selectedItem: item
+                });
+                return true;
+            }
+        });
     }
 
     /**
@@ -121,6 +131,17 @@ export default class Select extends Component {
                 this.state.cssClass.add(`${uiPrefix}-normal`);
             }
             this.setState({cssClass: this.state.cssClass});
+        }
+
+        if ('value' in changedProps || 'datasource' in changedProps) {
+            u.find(this.props.datasource, item => {
+                if (item.value === this.props.value) {
+                    this.setState({
+                        selectedItem: item
+                    });
+                    return true;
+                }
+            });
         }
     }
 

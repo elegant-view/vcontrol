@@ -6,15 +6,14 @@
 
 import Component from 'vcomponent/Component';
 import Dropdown from '../Dropdown/Dropdown';
-import Select from '../Form/Select';
 import {uiPrefix} from '../variables';
 import {propsType} from 'vcomponent/decorators';
 import {PropTypes} from 'vcomponent/type';
 import u from 'underscore';
 import Event from '../Event';
+import Select from '../Select';
 
 const GET_DAYS = Symbol('getDays');
-const CONVERT_PROPS = Symbol('convertProps');
 const ON_YEAR_CHANGE = Symbol('onYearChange');
 const ON_MONTH_CHANGE = Symbol('onMonthChange');
 const ON_SELECT = Symbol('onSelect');
@@ -27,22 +26,30 @@ const DAYS_CACHE = Symbol('daysCache');
     years: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.number)])
 })
 export default class Calendar extends Component {
+
+    /**
+     * getTemplate
+     *
+     * @public
+     * @override
+     * @return {string}
+     */
     getTemplate() {
         return `
             <div class="${uiPrefix}-calendar">
                 <div class="head">
                     <div class="center">
-                        <ev-select class="${uiPrefix}-form-control"
-                            value="\${state.selectedYear}"
-                            items="\${state.years}"
-                            onchange="\${state.onYearChange}"
-                            ref="yearCtrl">
+                        <ev-select value="{state.selectedYear}"
+                            datasource="{state.years}"
+                            on-change="{state.onYearChange}"
+                            ref="yearCtrl"
+                            size="small">
                         </ev-select>年
-                        <ev-select class="${uiPrefix}-form-control"
-                            value="\${state.selectedMonth}"
-                            items="\${state.months}"
-                            onchange="\${state.onMonthChange}"
-                            ref="monthCtrl">
+                        <ev-select value="{state.selectedMonth}"
+                            datasource="{state.months}"
+                            on-change="{state.onMonthChange}"
+                            ref="monthCtrl"
+                            size="small">
                         </ev-select>月
                     </div>
                 </div>
@@ -62,13 +69,13 @@ export default class Calendar extends Component {
                             && state.selectedDay === day.date.getDate()
                         -->
                         <!-- if: day.disabled -->
-                            <span class="disabled \${isSelectedDate?'selected':''}">
-                                \${day.date.getDate()}
+                            <span class="disabled {isSelectedDate?'selected':''}">
+                                {day.date.getDate()}
                             </span>
                         <!-- else -->
-                            <span class="enable \${isSelectedDate?'selected':''}"
+                            <span class="enable {isSelectedDate?'selected':''}"
                                 on-click="state.onSelect(day)">
-                                \${day.date.getDate()}
+                                {day.date.getDate()}
                             </span>
                         <!-- /if -->
                     <!-- /for -->
@@ -77,12 +84,17 @@ export default class Calendar extends Component {
         `;
     }
 
+    /**
+     * init
+     *
+     * @public
+     * @override
+     */
     init() {
         // 每个月显示的“天”数据都会是固定的，所以可以缓存起来，不用每次计算
         this[DAYS_CACHE] = {};
         this.defaultDate = new Date();
 
-        this[CONVERT_PROPS]();
         this[CONVERT_YEARS]();
 
         const date = this.props.date || this.defaultDate;
@@ -92,40 +104,37 @@ export default class Calendar extends Component {
             selectedDay: date.getDate(),
             onYearChange: ::this[ON_YEAR_CHANGE],
             onMonthChange: ::this[ON_MONTH_CHANGE],
-            onSelect: ::this[ON_SELECT]
+            onSelect: ::this[ON_SELECT],
+            months: u.map(u.range(1, 12), month => ({text: '' + month, value: month})),
+            days: this[GET_DAYS](date)
         });
     }
 
+    /**
+     * propsChange
+     *
+     * @public
+     * @override
+     * @param  {Object} changedProps changedProps
+     */
     propsChange(changedProps) {
-        this[CONVERT_PROPS]();
+        if ('date' in changedProps) {
+            const date = this.props.date || this.defaultDate;
+            this.setState({
+                days: this[GET_DAYS](date)
+            });
+        }
 
         if ('years' in changedProps) {
             this[CONVERT_YEARS]();
         }
-
-        // date发生了变化就要重新设置一下选择的年月日
-        if ('date' in changedProps) {
-            const date = this.props.date || this.defaultDate;
-            this.setState({
-                selectedYear: date.getFullYear(),
-                selectedMonth: date.getMonth() + 1,
-                selectedDay: date.getDate()
-            });
-        }
     }
 
-    [CONVERT_PROPS]() {
-        const date = this.props.date || this.defaultDate;
-        const months = u.map(u.range(12), num => ({
-            label: num + 1,
-            value: num + 1
-        }));
-        this.setState({
-            days: this[GET_DAYS](date),
-            months
-        });
-    }
-
+    /**
+     * 转换一下年相关属性
+     *
+     * @private
+     */
     [CONVERT_YEARS]() {
         let years;
 
@@ -144,7 +153,7 @@ export default class Calendar extends Component {
         }
 
         this.setState({
-            years: years.map(year => ({value: year, label: year}))
+            years: years.map(year => ({value: year, text: '' + year}))
         });
     }
 
@@ -209,9 +218,21 @@ export default class Calendar extends Component {
         }
     }
 
+    /**
+     * 年发生变化的回调函数
+     *
+     * @private
+     * @param  {Event} event 事件对象
+     */
     [ON_YEAR_CHANGE](event) {
-        const selectedYear = parseInt(this.refs.yearCtrl.getValue(), 10);
-        const date = new Date(selectedYear, this.refs.monthCtrl.getValue(), 0);
+        const selectedYear = event.get('selected').value;
+        const selectedMonthItem = this.refs.monthCtrl.getSelected();
+        if (!selectedMonthItem) {
+            return;
+        }
+        const selectedMonth = selectedMonthItem.value;
+
+        const date = new Date(selectedYear, selectedMonth, 0);
         this.setState({
             days: this[GET_DAYS](date),
             selectedYear,
@@ -219,10 +240,21 @@ export default class Calendar extends Component {
         });
     }
 
+    /**
+     * 月发生改变的回调函数
+     *
+     * @private
+     * @param  {Event} event 事件对象
+     */
     [ON_MONTH_CHANGE](event) {
-        const selectedMonth = parseInt(this.refs.monthCtrl.getValue(), 10);
-        const date = new Date(this.refs.yearCtrl.getValue(), selectedMonth, 0);
+        const selectedMonth = event.get('selected').value;
+        const selectedYearItem = this.refs.yearCtrl.getSelected();
+        if (!selectedYearItem) {
+            return;
+        }
+        const selectedYear = selectedYearItem && selectedYearItem.value;
 
+        const date = new Date(selectedYear, selectedMonth, 0);
         this.setState({
             days: this[GET_DAYS](date),
             selectedMonth,
@@ -230,6 +262,12 @@ export default class Calendar extends Component {
         });
     }
 
+    /**
+     * 选中天回调
+     *
+     * @private
+     * @param  {Object} day 当前选中的天
+     */
     [ON_SELECT](day) {
         this.setState({
             selectedYear: day.date.getFullYear(),
@@ -244,10 +282,23 @@ export default class Calendar extends Component {
         }
     }
 
+    /**
+     * 获取当前选中的日期
+     *
+     * @public
+     * @return {Date}
+     */
     getValue() {
         return new Date(this.state.selectedYear, this.state.selectedMonth - 1, this.state.selectedDay);
     }
 
+    /**
+     * getComponentClasses
+     *
+     * @public
+     * @override
+     * @return {Array.<Component>}
+     */
     getComponentClasses() {
         return [Dropdown, Select];
     }
