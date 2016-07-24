@@ -3,7 +3,7 @@
  * @author yibuyisheng(yibuyisheng@163.com)
  */
 
-export * from 'vcomponent/utils';
+import * as util from 'vcomponent/utils';
 
 export function inArray(value, arr) {
     let ret = false;
@@ -15,3 +15,9 @@ export function inArray(value, arr) {
     });
     return ret;
 }
+
+export function isString(value) {
+    return util.isClass(value, 'String');
+}
+
+export * from 'vcomponent/utils';

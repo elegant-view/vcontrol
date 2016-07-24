@@ -8,16 +8,27 @@ import Select from 'vcontrol/Select';
 
 export default class SelectPage extends Component {
     getTemplate() {
-        return `<ev-select>layer<a on-click="state.onclick()">\${state.content}</a></ev-select>`;
+        return `
+            <ev-select width="500" datasource="{state.datasource}" default-text="请输入"></ev-select>
+        `;
     }
 
     init() {
-        const me = this;
         this.setState({
-            onclick() {
-                me.setState({content: Date.now()});
-            },
-            content: '变'
+            datasource: [
+                {
+                    text: '1',
+                    value: 1
+                },
+                {
+                    text: '2',
+                    value: 2
+                },
+                {
+                    text: '3',
+                    value: 3
+                }
+            ]
         });
     }
 

@@ -1,3 +1,10 @@
-$ui-prefix: "ev";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
 
-@import "../node_modules/bootstrap/scss/mixins";
+$fa-font-path: "../../../node_modules/font-awesome/fonts";
+@import "../../../node_modules/font-awesome/scss/font-awesome";
+
+$ui-prefix: "ev";
+@import "./Layer";
+@import "./Select";
+@import "./Option";

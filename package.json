@@ -36,6 +36,7 @@
     "bootstrap": "^4.0.0-alpha.2",
     "bootstrap-sass": "^3.3.6",
     "event": "github:elegant-view/event",
+    "font-awesome": "fortawesome/Font-Awesome",
     "protectobject": "github:elegant-view/protectobject",
     "underscore": "^1.8.3",
     "vcomponent": "github:elegant-view/vcomponent",

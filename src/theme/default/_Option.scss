@@ -1,0 +1,11 @@
+.#{$ui-prefix}-option {
+    padding: 0 10px;
+    cursor: pointer;
+    height: 32px;
+    line-height: 32px;
+    transition: all .8s ease;
+
+    &:hover {
+        background-color: #eaf8fe;
+    }
+}
