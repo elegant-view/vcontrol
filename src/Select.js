@@ -13,6 +13,7 @@ import * as util from './util';
 import CssClass from './CssClass';
 import Option from './Option';
 import u from 'underscore';
+import Event from './Event';
 
 @propsType({
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -197,7 +198,12 @@ export default class Select extends Component {
     onItemSelect(value) {
         const itemData = u.find(this.props.datasource, item => item.value === value);
         if (!this.state.selectedItem || this.state.selectedItem.value !== value) {
-            this.props.onChange && this.props.onChange(itemData);
+
+            const event = new Event(this, null, 'select');
+            event.set('value', value);
+            event.set('selected', itemData);
+            this.props.onChange && this.props.onChange(event);
+
             this.setState({selectedItem: itemData});
         }
         this.hideLayer();
