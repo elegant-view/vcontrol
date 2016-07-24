@@ -9,7 +9,9 @@ import Select from 'vcontrol/Select';
 export default class SelectPage extends Component {
     getTemplate() {
         return `
-            <ev-select width="500" datasource="{state.datasource}" default-text="请输入"></ev-select>
+            <ev-select width="200" datasource="{state.datasource}" default-text="请输入"></ev-select>
+            <ev-select width="200" datasource="{state.datasource}" size="large"></ev-select>
+            <ev-select width="200" datasource="{state.datasource}" size="small"></ev-select>
         `;
     }
 

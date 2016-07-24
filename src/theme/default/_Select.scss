@@ -11,6 +11,16 @@
     color: #666;
     transition: border-color .3s ease;
 
+    &.#{$ui-prefix}-large {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    &.#{$ui-prefix}-small {
+        height: 22px;
+        line-height: 22px;
+    }
+
     &:hover,
     &.#{$ui-prefix}-open {
         border-color: #57c5f7;

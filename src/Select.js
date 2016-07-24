@@ -17,7 +17,8 @@ import u from 'underscore';
 @propsType({
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     datasource: PropTypes.arrayOf(PropTypes.shape({text: PropTypes.string, value: PropTypes.any})),
-    defaultText: PropTypes.string
+    defaultText: PropTypes.string,
+    size: PropTypes.oneOf(['large', 'normal', 'small'])
 })
 export default class Select extends Component {
 
@@ -51,6 +52,12 @@ export default class Select extends Component {
 
         const cssClass = new CssClass();
         cssClass.add(`${uiPrefix}-select`);
+        if (this.props.size) {
+            cssClass.add(`${uiPrefix}-${this.props.size}`);
+        }
+        else {
+            cssClass.add(`${uiPrefix}-normal`);
+        }
 
         this.setState({
             onClick: ::this.onClick,
@@ -101,6 +108,17 @@ export default class Select extends Component {
 
         if ('defaultText' in changedProps) {
             this.setState({defaultText: this.props.defaultText || '请选择'});
+        }
+
+        if ('size' in changedProps) {
+            u.each(::this.state.cssClass.remove);
+            if (this.props.size) {
+                this.state.cssClass.add(`${uiPrefix}-${this.props.size}`);
+            }
+            else {
+                this.state.cssClass.add(`${uiPrefix}-normal`);
+            }
+            this.setState({cssClass: this.state.cssClass});
         }
     }
 
