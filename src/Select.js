@@ -18,7 +18,8 @@ import u from 'underscore';
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     datasource: PropTypes.arrayOf(PropTypes.shape({text: PropTypes.string, value: PropTypes.any})),
     defaultText: PropTypes.string,
-    size: PropTypes.oneOf(['large', 'normal', 'small'])
+    size: PropTypes.oneOf(['large', 'normal', 'small']),
+    onChange: PropTypes.func
 })
 export default class Select extends Component {
 
@@ -195,8 +196,21 @@ export default class Select extends Component {
      */
     onItemSelect(value) {
         const itemData = u.find(this.props.datasource, item => item.value === value);
-        this.setState({selectedItem: itemData});
+        if (!this.state.selectedItem || this.state.selectedItem.value !== value) {
+            this.props.onChange && this.props.onChange(itemData);
+            this.setState({selectedItem: itemData});
+        }
         this.hideLayer();
+    }
+
+    /**
+     * 获取当前选中的
+     *
+     * @public
+     * @return {Object}
+     */
+    getSelected() {
+        return this.state.selectedItem;
     }
 
     /**
