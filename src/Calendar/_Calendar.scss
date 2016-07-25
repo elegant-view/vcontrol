@@ -2,6 +2,7 @@
 @import "../variables";
 
 .#{$ui-prefix}-calendar {
+    display: inline-block;
     width: 20em;
 
     .week,

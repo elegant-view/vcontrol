@@ -1,6 +1,7 @@
 .#{$ui-prefix}-layer {
     position: absolute;
     transition: all .3s ease;
+    overflow: auto;
 
     &.hide {
         height: 0;

@@ -8,6 +8,7 @@ import {uiPrefix} from './variables';
 import {PropTypes} from 'vcomponent/type';
 import {propsType} from 'vcomponent/decorators';
 import CssClass from './CssClass';
+import Node from 'vtpl/nodes/Node';
 
 @propsType({
     'class': PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
@@ -26,7 +27,8 @@ export default class Layer extends Component {
         return `
             <div class="{state.cssClass}"
                 style="{state.mainStyle}"
-                on-outclick="state.onOutClick(event)">
+                on-outclick="state.onOutClick(event)"
+                ref="main">
                 {props.children}
             </div>
         `;
@@ -91,11 +93,28 @@ export default class Layer extends Component {
             return;
         }
 
+        const windowHeight = Node.getWindowHeight();
+
         const mainRect = this.main.getRect();
         const mainStyle = this.state.mainStyle || {};
         mainStyle.left = mainRect.left + 'px';
-        mainStyle.top = (mainRect.top + mainRect.height) + 'px';
         mainStyle.minWidth = mainRect.width + 'px';
+
+        const bottomMaxHeight = windowHeight - mainRect.top - mainRect.height;
+        const topMaxHeight = mainRect.bottom - mainRect.height;
+        if (bottomMaxHeight > topMaxHeight) {
+            mainStyle.top = (mainRect.top + mainRect.height) + 'px';
+            mainStyle.bottom = '';
+            mainStyle.maxHeight = bottomMaxHeight + 'px';
+            mainStyle.borderTopWidth = 0;
+        }
+        else {
+            mainStyle.bottom = windowHeight - mainRect.top + 'px';
+            mainStyle.top = '';
+            mainStyle.maxHeight = topMaxHeight + 'px';
+            mainStyle.borderBottomWidth = 0;
+        }
+
         this.setState({mainStyle});
     }
 

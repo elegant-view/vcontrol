@@ -22,7 +22,7 @@ const DAYS_CACHE = Symbol('daysCache');
 
 @propsType({
     date: PropTypes.date,
-    onSelect: PropTypes.func,
+    onChange: PropTypes.func,
     years: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.number)])
 })
 export default class Calendar extends Component {
@@ -43,13 +43,15 @@ export default class Calendar extends Component {
                             datasource="{state.years}"
                             on-change="{state.onYearChange}"
                             ref="yearCtrl"
-                            size="small">
+                            size="small"
+                            width="70">
                         </ev-select>年
                         <ev-select value="{state.selectedMonth}"
                             datasource="{state.months}"
                             on-change="{state.onMonthChange}"
                             ref="monthCtrl"
-                            size="small">
+                            size="small"
+                            width="50">
                         </ev-select>月
                     </div>
                 </div>
@@ -85,20 +87,19 @@ export default class Calendar extends Component {
     }
 
     /**
-     * init
+     * constructor
      *
      * @public
-     * @override
      */
-    init() {
+    constructor() {
+        super();
+
         // 每个月显示的“天”数据都会是固定的，所以可以缓存起来，不用每次计算
         this[DAYS_CACHE] = {};
         this.defaultDate = new Date();
 
-        this[CONVERT_YEARS]();
-
         const date = this.props.date || this.defaultDate;
-        this.setState({
+        this.state = {
             selectedYear: date.getFullYear(),
             selectedMonth: date.getMonth() + 1,
             selectedDay: date.getDate(),
@@ -107,7 +108,17 @@ export default class Calendar extends Component {
             onSelect: ::this[ON_SELECT],
             months: u.map(u.range(1, 12), month => ({text: '' + month, value: month})),
             days: this[GET_DAYS](date)
-        });
+        };
+    }
+
+    /**
+     * init
+     *
+     * @public
+     * @override
+     */
+    init() {
+        this[CONVERT_YEARS]();
     }
 
     /**
@@ -121,7 +132,9 @@ export default class Calendar extends Component {
         if ('date' in changedProps) {
             const date = this.props.date || this.defaultDate;
             this.setState({
-                days: this[GET_DAYS](date)
+                days: this[GET_DAYS](date),
+                selectedYear: date.getFullYear(),
+                selectedMonth: date.getMonth() + 1
             });
         }
 
@@ -275,10 +288,10 @@ export default class Calendar extends Component {
             selectedDay: day.date.getDate()
         });
 
-        if (this.props.onSelect) {
+        if (this.props.onChange) {
             const event = new Event(this, null, 'select');
             event.set('value', this.getValue());
-            this.props.onSelect(event);
+            this.props.onChange(event);
         }
     }
 
